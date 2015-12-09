@@ -1,0 +1,4 @@
+var config = {
+	"numLines": 2,
+	"soundNames" : ["t_low.wav", "t.wav", "t_high.wav"]
+}

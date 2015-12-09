@@ -1,0 +1,16 @@
+{
+  "name": "orchester",
+  "version": "0.0.1",
+  "description": "App",
+  "dependencies": {
+    "express": "^4.13.3",
+    "socket.io": "latest"
+  },
+  "author": "developer",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "main": "server.js",
+  "devDependencies": {},
+  "license": "ISC"
+}
