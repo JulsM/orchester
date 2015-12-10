@@ -6,11 +6,11 @@ $(document).ready(function(){
     // fired upon successful connection
     socket.on('connect', function() {
         console.log('connection successful');
-        socket.emit('connect mobile', { user: socket.id}, function(data){
+        socket.emit('connect mobile', { "player": socket.id}, function(data){
             if(data.connected){
-                console.log('user: '+data.user+' connected');
+                console.log('player: '+data.player+' connected');
             }else{
-                console.log('user not connected. '+data.error);
+                console.log('player not connected. '+data.error);
             }
         });
     });
@@ -41,7 +41,7 @@ function initMobile() {
     $('#playBtn').click(function() {
         var fullscreenEnabled = document.fullscreenEnabled || document.mozFullScreenEnabled || document.webkitFullscreenEnabled;
         if(fullscreenEnabled) {
-            toggleFullscreen();
+            // toggleFullscreen();
         }
         $('#mobileOverlay').hide();
     });
