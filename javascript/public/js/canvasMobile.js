@@ -73,7 +73,7 @@ function updateCirclePosition(e) {
 
     var percentX = 100 * (pos.x) / canvas.width;
     var percentY = 100 * (pos.y) / canvas.height;
-    socket.emit('update position', { user: socket.id, x: percentX, y: percentY });
+    socket.emit('update position', { "player": {"id": socket.id, "x": percentX, "y": percentY }});
     
 }
 

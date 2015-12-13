@@ -73,7 +73,7 @@ io.sockets.on('connection', function (socket) {
                 if(room.mobileSockets[i].id == socket.id) {
                     console.log('remove socket');
                     room.mobileSockets.splice(i, 1);
-                    // room.screenSocket.emit('remove user', socket.user);
+                    room.screenSocket.emit('remove player', {"player": socket.player});
                     break;
                 }
             }
