@@ -2,6 +2,7 @@
 using System.Collections;
 using SocketIO;
 using System.Collections.Generic;
+using System;
 
 public class SocketBehaviour : MonoBehaviour {
 
@@ -28,6 +29,7 @@ public class SocketBehaviour : MonoBehaviour {
 		socket.On("add player", addPlayer);
 		socket.On("remove player", removePlayer);
 		socket.On("update position", updatePlayerPosition);
+		socket.On("stop interaction", stopPlayerInteraction);
 
 		StartCoroutine("connect");
 
@@ -47,7 +49,7 @@ public class SocketBehaviour : MonoBehaviour {
 	/// This is the callback function of the emit "new room". If already players exist
 	/// on server side they get added in the list of all players.
 	/// </summary>
-	/// <param name="playerArray">Player array.</param>
+	/// <param name="playerArray">Player array with IDs.</param>
 	private void roomCreated(JSONObject playerArray)
 	{
 		JSONObject players = playerArray [0] ["players"];
@@ -61,7 +63,7 @@ public class SocketBehaviour : MonoBehaviour {
 	/// <summary>
 	/// Adds a specified player to the list of all players.
 	/// </summary>
-	/// <param name="e">E.</param>
+	/// <param name="e">playerID</param>
 	public void addPlayer(SocketIOEvent e)
 	{
 		string playerId = e.data ["player"].ToString ();
@@ -73,7 +75,7 @@ public class SocketBehaviour : MonoBehaviour {
 	/// <summary>
 	/// Removes a specified player from the list of all current players.
 	/// </summary>
-	/// <param name="e">E.</param>
+	/// <param name="e">playerID</param>
 	public void removePlayer(SocketIOEvent e)
 	{
 		string playerId = e.data ["player"].ToString ();
@@ -88,24 +90,44 @@ public class SocketBehaviour : MonoBehaviour {
 		Debug.Log("[SocketIO] players length  "+playerList.Count);
 	}
 
-
+	/// <summary>
+	/// Updates the position of a specified player object.
+	/// </summary>
+	/// <param name="e">player: id, x position % (float), y position % (float)</param>
 	private void updatePlayerPosition(SocketIOEvent e)
 	{
+//		Debug.Log("[SocketIO] updated player position  "+e.data);
+
 		JSONObject player = e.data ["player"];
 		for(int i = 0; i < playerList.Count; i++) {
 			Player pList = playerList [i];
 			if(pList.Id.Equals(player["id"].ToString())) {
-				float x = float.Parse (player ["x"].ToString ());
 				float y = float.Parse (player ["y"].ToString ());
-				pList.updatePosition (x, y);
-				Debug.Log("[SocketIO] updated player position  "+pList.Y);
+				int instrument = Int32.Parse(player ["instrument"].ToString ());
+				pList.updatePosition (y, instrument);
 				break;
 			}
 		}
 
 	}
 
+	/// <summary>
+	/// Stops interaction of a specified player.
+	/// </summary>
+	/// <param name="e">playerID</param>
+	private void stopPlayerInteraction(SocketIOEvent e)
+	{
+		string playerId = e.data ["player"].ToString ();
 
+		for(int i = 0; i < playerList.Count; i++) {
+			Player p = playerList [i];
+			if(p.Id.Equals(playerId)) {
+				Debug.Log("[SocketIO] stop player  "+p.ToString());
+				break;
+			}
+		}
+
+	}
 
 
 

@@ -9,6 +9,9 @@ $(document).ready(function(){
         socket.emit('connect mobile', { "player": socket.id}, function(data){
             if(data.connected){
                 console.log('player: '+data.player+' connected');
+                if(player != 'undefined') {
+                    player.id = socket.id;
+                }
             }else{
                 console.log('player not connected. '+data.error);
             }
@@ -59,6 +62,14 @@ function initMobile() {
     document.addEventListener("msfullscreenchange", function(e) {
         leaveFullscreen();
     });
+
+    $('#btnWrapper').children().click(function() {
+        $('#btnWrapper').children().css('border', '1px solid #333');
+        $(this).css('border', '2px solid #fff');
+        player.color = $(this).css('background-color');
+        player.instrument = $(this).data('instr');
+        drawCircle();
+    })
 }
 
 
