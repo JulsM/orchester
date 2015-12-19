@@ -7,7 +7,7 @@ public class SocketBehaviour : MonoBehaviour {
 
 
 	private SocketIOComponent socket;
-	private List<Player> playerList;
+	public List<Player> playerList;
 
 	// Use this for initialization
 	void Start () {
@@ -104,6 +104,11 @@ public class SocketBehaviour : MonoBehaviour {
 		}
 
 	}
+
+    public List<Player> getPlayerList()
+    {
+        return playerList;
+    }
 
 
 
