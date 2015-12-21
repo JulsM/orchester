@@ -19,12 +19,12 @@ public class DrawOnScreen : MonoBehaviour {
 
         //if new player added, instantiate a new Sprite and put it into the sprites
         //remove accordingly
-        int tempSize = playerList.Count;
+//        int tempSize = playerList.Count;
         //playerList = SocketBehaviour.getPlayers() ??
-        if(tempSize != playerList.Count) diffSprites(tempSize - playerList.Count);
-       
-        drawPlayers();
-        playSound();
+//        if(tempSize != playerList.Count) diffSprites(tempSize - playerList.Count);
+//       
+//        drawPlayers();
+//        playSound();
 	
 	}
 

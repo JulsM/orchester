@@ -4,18 +4,19 @@ using SocketIO;
 using System.Collections.Generic;
 using System;
 
+
 public class SocketBehaviour : MonoBehaviour {
 
 
 	private SocketIOComponent socket;
-	public List<Player> playerList;
+	public List<Player> PlayerList { get; set;}
 
 	// Use this for initialization
 	void Start () {
 		GameObject go = GameObject.Find("SocketIO");
 		socket = go.GetComponent<SocketIOComponent>();
 
-		playerList = new List<Player> ();
+		PlayerList = new List<Player> ();
 
 		socket.On("open", (SocketIOEvent e) => {
 			Debug.Log("[SocketIO] Open received: " + e.name );
@@ -54,10 +55,10 @@ public class SocketBehaviour : MonoBehaviour {
 	{
 		JSONObject players = playerArray [0] ["players"];
 		for(int i = 0; i < players.Count; i++) {
-			playerList.Add(new Player (players[i].ToString()));
+			PlayerList.Add(new Player (players[i].ToString()));
 			Debug.Log("[SocketIO] player: " + players[i].ToString());
 		}
-		Debug.Log("[SocketIO] new room created: " + playerList.Count);
+		Debug.Log("[SocketIO] new room created: " + PlayerList.Count);
 	}
 
 	/// <summary>
@@ -68,8 +69,8 @@ public class SocketBehaviour : MonoBehaviour {
 	{
 		string playerId = e.data ["player"].ToString ();
 		Debug.Log("[SocketIO] add player  "+playerId);
-		playerList.Add(new Player (playerId));
-		Debug.Log("[SocketIO] players length  "+playerList.Count);
+		PlayerList.Add(new Player (playerId));
+		Debug.Log("[SocketIO] players length  "+PlayerList.Count);
 	}
 
 	/// <summary>
@@ -80,14 +81,14 @@ public class SocketBehaviour : MonoBehaviour {
 	{
 		string playerId = e.data ["player"].ToString ();
 		Debug.Log("[SocketIO] remove player  "+playerId);
-		for(int i = 0; i < playerList.Count; i++) {
-			Player p = playerList [i];
+		for(int i = 0; i < PlayerList.Count; i++) {
+			Player p = PlayerList [i];
 			if(p.Id.Equals(playerId)) {
-				playerList.RemoveAt (i);
+				PlayerList.RemoveAt (i);
 				break;
 			}
 		}
-		Debug.Log("[SocketIO] players length  "+playerList.Count);
+		Debug.Log("[SocketIO] players length  "+PlayerList.Count);
 	}
 
 	/// <summary>
@@ -96,11 +97,11 @@ public class SocketBehaviour : MonoBehaviour {
 	/// <param name="e">player: id, x position % (float), y position % (float)</param>
 	private void updatePlayerPosition(SocketIOEvent e)
 	{
-//		Debug.Log("[SocketIO] updated player position  "+e.data);
+		Debug.Log("[SocketIO] updated player position  "+e.data);
 
 		JSONObject player = e.data ["player"];
-		for(int i = 0; i < playerList.Count; i++) {
-			Player pList = playerList [i];
+		for(int i = 0; i < PlayerList.Count; i++) {
+			Player pList = PlayerList [i];
 			if(pList.Id.Equals(player["id"].ToString())) {
 				float y = float.Parse (player ["y"].ToString ());
 				int instrument = Int32.Parse(player ["instrument"].ToString ());
@@ -111,14 +112,8 @@ public class SocketBehaviour : MonoBehaviour {
 
 	}
 
-<<<<<<< HEAD
-    public List<Player> getPlayerList()
-    {
-        return playerList;
-    }
 
-||||||| merged common ancestors
-=======
+    
 	/// <summary>
 	/// Stops interaction of a specified player.
 	/// </summary>
@@ -127,22 +122,19 @@ public class SocketBehaviour : MonoBehaviour {
 	{
 		string playerId = e.data ["player"].ToString ();
 
-		for(int i = 0; i < playerList.Count; i++) {
-			Player p = playerList [i];
+		for(int i = 0; i < PlayerList.Count; i++) {
+			Player p = PlayerList [i];
 			if(p.Id.Equals(playerId)) {
+				p.CurrentlyPlaying = false;
 				Debug.Log("[SocketIO] stop player  "+p.ToString());
 				break;
 			}
 		}
->>>>>>> 08aaa853d15613fcca29a831e7d717ea1ce4e9c9
 
 	}
 
 
 
 
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }
