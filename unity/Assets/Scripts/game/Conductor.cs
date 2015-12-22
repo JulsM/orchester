@@ -41,10 +41,11 @@ public class Conductor: MonoBehaviour {
 	void Update() {
 		List<Player> playerList = gameObject.GetComponent<SocketBehaviour> ().PlayerList;
 		i++;
-		List <Player> sortedList = playerList.OrderBy (p => p.CurrentlyPlaying).ToList();
+		List <Player> sortedList = playerList.OrderByDescending (p => p.CurrentlyPlaying).ToList();
 		if (i % 10 == 1) {
-			foreach (Player p in playerList) {
-				Debug.Log ("update");
+
+			foreach (Player p in sortedList) {
+//				Debug.Log (p.ToString ());
 			}
 		}
 	}

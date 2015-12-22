@@ -15,33 +15,35 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/public/mobile.html');
 });
 
-var room = null;
-function Room(screenSocket, roomId){
+var room = new Room();
+function Room(){
     // do we have an existing instance?
     if (typeof Room.instance === 'object') {
         console.log('room already exists');
         var r = Room.instance;
-        r.screenSocket = screenSocket;
         return r;
     }
-    this.screenSocket = screenSocket;  //Stores the socket for the desktop connection
-    this.roomId = roomId;          //The room id/name. A unique string that links desktop to mobile
+    this.screenSocket = null;  //Stores the socket for the desktop connection
     this.mobileSockets = [];       //A list of all the mobile connections
 
     // cache
     Room.instance = this;
-    console.log('new room ' + this.roomId);
+    console.log('new room ');
     return this;
 }
 
 io.sockets.on('connection', function (socket) {
 
-    socket.on("new room", function(data, fn){
-        console.log(socket.id);
-        room = new Room(socket, data.room);
-        var json = {"players": []};
-        for (var i = 0; i < room.mobileSockets.length; i++) {
-            json.players.push(room.mobileSockets[i].player);
+    socket.on("unity connect", function(data, fn){
+        if(room != null) {
+            room.screenSocket = socket;
+            var json = {"connected": true, "players": []};
+            for (var i = 0; i < room.mobileSockets.length; i++) {
+                json.players.push(room.mobileSockets[i].player);
+            }
+            
+        } else {
+            var json = {"connected": false};
         }
         console.log(json);
         fn(json);
@@ -53,7 +55,9 @@ io.sockets.on('connection', function (socket) {
             room.mobileSockets.push(socket);
             console.log('mobileSockets length '+room.mobileSockets.length);
             fn({connected: true, player: data.player});
-            room.screenSocket.emit('add player', data);
+            if(room.screenSocket != null) {
+                room.screenSocket.emit('add player', data);
+            }
         }else{
             fn({connected: false, error: "No live desktop connection found"});
         }
@@ -74,7 +78,9 @@ io.sockets.on('connection', function (socket) {
                 if(room.mobileSockets[i].id == socket.id) {
                     console.log('remove socket');
                     room.mobileSockets.splice(i, 1);
-                    room.screenSocket.emit('remove player', {"player": socket.player});
+                    if(room.screenSocket != null) {
+                        room.screenSocket.emit('remove player', {"player": socket.player});
+                    }
                     break;
                 }
             }
@@ -82,11 +88,21 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on("update position", function(data){
-        room.screenSocket.emit('update position', data);
+        var player = data.player;
+        console.log(data);
+        var note = Math.floor(player.y * conf.notes / 100);
+        console.log(note);
+        if(room.screenSocket != null) { 
+            
+            room.screenSocket.emit('update player', { "player": {"id": player.id, "y": player.y, "instrument": player.instrument, "note":  note}});
+        }
     });
 
     socket.on("stop interaction", function(data){
-        room.screenSocket.emit('stop interaction', data);
+        if(room.screenSocket != null) {
+            room.screenSocket.emit('stop interaction', data);
+        }
+        
     });
 
 });

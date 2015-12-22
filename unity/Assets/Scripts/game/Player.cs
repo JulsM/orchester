@@ -5,7 +5,8 @@ public class Player{
 
 	public string Id { get; set; }
 	private float y;
-	private int instrument;
+	public int Instrument { get; set; }
+	public int Note { get; set; }
 	public bool CurrentlyPlaying { get; set; }
 
 	public float Y    // the Name property
@@ -20,13 +21,15 @@ public class Player{
 	{
 		Id = id;
 		this.y = 0;
-		this.instrument = 1;
+		this.Instrument = 1;
+		this.Note = 1;
 		this.CurrentlyPlaying = false;
 	}
 
-	public void updatePosition(float y, int instr) {
+	public void updatePlayer(float y, int instr, int note) {
 		this.y = y;
-		this.instrument = instr;
+		this.Instrument = instr;
+		this.Note = note;
 		this.CurrentlyPlaying = true;
 	}
 
@@ -34,7 +37,7 @@ public class Player{
 
 	public override string ToString()
 	{
-		return "Player: " + this.Id + " Position: " + this.y + " Instrument: "+ this.instrument + " playing: "+ this.CurrentlyPlaying;
+		return "Player: " + this.Id + " Position: " + this.y + " Instrument: "+ this.Instrument + " note: "+this.Note+ " playing: "+ this.CurrentlyPlaying;
 	}
 
 }

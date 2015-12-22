@@ -32,7 +32,10 @@ function initCanvas() {
     canvas.addEventListener('touchmove', updatePosition);
     canvas.addEventListener('touchend', interactionEnd);
     canvas.addEventListener('touchstart', updatePosition);
-   
+//    setInterval(function() {
+//      var percentY = 100 * (player.y) / canvas.height;
+//     socket.emit('update position', { "player": {"id": socket.id, "y": percentY, "instrument": player.instrument }});
+// }, 1000);
 }
 
 /*
@@ -82,10 +85,8 @@ function updatePosition(e) {
     var touch = e.targetTouches[0];
 	var pos = getMousePos(touch);
     player.y = pos.y;
-    // var percentX = 100 * (pos.x) / canvas.width;
-    var percentY = 100 * (pos.y) / canvas.height;
-    socket.emit('update position', { "player": {"id": socket.id, "y": percentY, "instrument": player.instrument }});
     drawCircle();
+    emitPlayerUpdate();
 }
 
 function drawCircle() {
@@ -101,4 +102,10 @@ function drawCircle() {
 function interactionEnd(e) {
     e.preventDefault();
     socket.emit('stop interaction', {"player": socket.id});
+}
+
+
+function emitPlayerUpdate() {
+    var percentY = Math.round(10000 * (player.y) / canvas.height) / 100;
+    socket.emit('update position', { "player": {"id": socket.id, "y": percentY, "instrument": player.instrument }});
 }
