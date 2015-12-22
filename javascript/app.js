@@ -37,6 +37,7 @@ function Room(screenSocket, roomId){
 io.sockets.on('connection', function (socket) {
 
     socket.on("new room", function(data, fn){
+        console.log(socket.id);
         room = new Room(socket, data.room);
         var json = {"players": []};
         for (var i = 0; i < room.mobileSockets.length; i++) {

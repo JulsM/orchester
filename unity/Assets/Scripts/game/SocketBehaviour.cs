@@ -19,7 +19,10 @@ public class SocketBehaviour : MonoBehaviour {
 		PlayerList = new List<Player> ();
 
 		socket.On("open", (SocketIOEvent e) => {
-			Debug.Log("[SocketIO] Open received: " + e.name );
+			Debug.Log("[SocketIO] Open received: " + socket.sid );
+//			Dictionary<string, string> data = new Dictionary<string, string>();
+//			data["room"] = "test";
+//			socket.Emit("new room", new JSONObject(data), roomCreated);
 		});
 		socket.On("error", (SocketIOEvent e) => {
 			Debug.Log("[SocketIO] Error received: " + e.name );
@@ -27,24 +30,14 @@ public class SocketBehaviour : MonoBehaviour {
 		socket.On("close", (SocketIOEvent e) => {
 			Debug.Log("[SocketIO] Close received: " + e.name );
 		});
-		socket.On("add player", addPlayer);
-		socket.On("remove player", removePlayer);
-		socket.On("update position", updatePlayerPosition);
-		socket.On("stop interaction", stopPlayerInteraction);
-
-		StartCoroutine("connect");
+//		socket.On("add player", addPlayer);
+//		socket.On("remove player", removePlayer);
+//		socket.On("update position", updatePlayerPosition);
+//		socket.On("stop interaction", stopPlayerInteraction);
 
 	}
 
-	private IEnumerator connect()
-	{
-		// wait 1 seconds and continue
-		yield return new WaitForSeconds(1);
 
-		Dictionary<string, string> data = new Dictionary<string, string>();
-		data["room"] = "test";
-		socket.Emit("new room", new JSONObject(data), roomCreated);
-	}
 
 	/// <summary>
 	/// This is the callback function of the emit "new room". If already players exist
@@ -60,6 +53,8 @@ public class SocketBehaviour : MonoBehaviour {
 		}
 		Debug.Log("[SocketIO] new room created: " + PlayerList.Count);
 	}
+
+
 
 	/// <summary>
 	/// Adds a specified player to the list of all players.
