@@ -20,9 +20,11 @@ public class SocketBehaviour : MonoBehaviour {
 
 		socket.On("open", (SocketIOEvent e) => {
 			Debug.Log("[SocketIO] Open received: " + socket.sid );
-//			Dictionary<string, string> data = new Dictionary<string, string>();
-//			data["room"] = "test";
-//			socket.Emit("new room", new JSONObject(data), roomCreated);
+			if(socket.sid.Length != 0) {
+				Dictionary<string, string> data = new Dictionary<string, string>();
+				data["room"] = "test";
+				socket.Emit("new room", new JSONObject(data), roomCreated);
+			}
 		});
 		socket.On("error", (SocketIOEvent e) => {
 			Debug.Log("[SocketIO] Error received: " + e.name );
@@ -30,10 +32,10 @@ public class SocketBehaviour : MonoBehaviour {
 		socket.On("close", (SocketIOEvent e) => {
 			Debug.Log("[SocketIO] Close received: " + e.name );
 		});
-//		socket.On("add player", addPlayer);
-//		socket.On("remove player", removePlayer);
-//		socket.On("update position", updatePlayerPosition);
-//		socket.On("stop interaction", stopPlayerInteraction);
+		socket.On("add player", addPlayer);
+		socket.On("remove player", removePlayer);
+		socket.On("update position", updatePlayerPosition);
+		socket.On("stop interaction", stopPlayerInteraction);
 
 	}
 
