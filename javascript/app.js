@@ -89,9 +89,9 @@ io.sockets.on('connection', function (socket) {
 
     socket.on("update position", function(data){
         var player = data.player;
-        console.log(data);
+        // console.log(data);
         var note = Math.floor(player.y * conf.notes / 100);
-        console.log(note);
+        // console.log(note);
         if(room.screenSocket != null) { 
             
             room.screenSocket.emit('update player', { "player": {"id": player.id, "y": player.y, "instrument": player.instrument, "note":  note}});

@@ -16,7 +16,7 @@ function Player(){
     this.id;
     this.y = canvas.height/2;
     this.color = "#00ff00";
-    this.instrument = 1;
+    this.instrument = 0;
     // cache
     Player.instance = this;
     return this;
