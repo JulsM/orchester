@@ -9,84 +9,157 @@ public class Conductor: MonoBehaviour {
 
 
 	private AudioMixer master;
-	private Dictionary<int, AudioSource[]> soundCollection;
+	private Dictionary<int, AudioSource[]> soundCollection; // all sounds as AudioSources
+	private Dictionary<int, int[]> tempPlaying; //array of temporarily playing instruments, notes and how much of them
 
 	static Dictionary<string, string[]> soundNames = new Dictionary<string, string[]> {
-		{"instrument_a", new string[]{"t_high", "t","t_low" }},
-		{"instrument_b", new string[]{"520", "480","440" }}
+		{"instrument_a", new string[]{"syntklocka_stab_13","syntklocka_stab_12"
+				,"syntklocka_stab_11","syntklocka_stab_10","syntklocka_stab_9","syntklocka_stab_8","syntklocka_stab_7","syntklocka_stab_6"
+				,"syntklocka_stab_5","syntklocka_stab_4"}}
+//		{"instrument_b", new string[]{"t_high", "t","t_low" }},
+//		{"instrument_c", new string[]{"520", "480","440" }}
 	};
-	static int numberNotes= 3;
+	static int numberNotes= 10;
+	static float fadeRate = 0.9999f;
 
 
 
 	void Start() {
-		master = Resources.Load("Master") as AudioMixer;
+		master = Resources.Load("Master") as AudioMixer; // master mixer
 		soundCollection = new Dictionary<int, AudioSource[]>();
 		int i = 0;
+		//load AudioClips likes specified in the SoundNames array
 		foreach(KeyValuePair<string, string[]> instrument in soundNames){
 			
 			AudioSource[] sources = new AudioSource[instrument.Value.Length];
 
 			for(int j = 0; j < instrument.Value.Length; j++) {
 				string note = instrument.Value [j];
-				AudioSource s = gameObject.AddComponent<AudioSource>();
-				s.clip = Resources.Load(note) as AudioClip;
-				s.outputAudioMixerGroup = master.FindMatchingGroups (instrument.Key) [0];
+				AudioSource s = gameObject.AddComponent<AudioSource>(); //add AudioSource to gameObject
+				s.clip = Resources.Load(instrument.Key + "\\"+note) as AudioClip; // load from Ressources folder
+				s.outputAudioMixerGroup = master.FindMatchingGroups (instrument.Key) [0]; // route to matching mixer
 				sources [j] = s;
 			}
 			soundCollection.Add(i, sources);
 			i++;
 		}
-//		soundCollection["instrument_b"][0].Play ();
-
+		playOnStart ();
+		tempPlaying = new Dictionary<int, int[]> ();
 	}
 
 	void Update() {
 		System.Diagnostics.Stopwatch stopwatch = System.Diagnostics.Stopwatch.StartNew(); 
 		List<Player> playerList = gameObject.GetComponent<SocketBehaviour> ().PlayerList;
-		List <Player> sortedList = playerList.OrderByDescending (p => p.CurrentlyPlaying).ToList();
+		List <Player> sortedList = playerList.OrderByDescending (p => p.CurrentlyPlaying).ToList(); //sort playerlist that all currently playing players come first
 
-		Dictionary<int, int[]> tempPlay = new Dictionary<int, int[]>();
+		Dictionary<int, int[]> nextPlay = new Dictionary<int, int[]>(); //array with instruments and notes which get played in the next frame
 		int totalPlaying = 0;
 		foreach (Player p in sortedList) {
 			if(p.CurrentlyPlaying) {
 				totalPlaying++;
-				Debug.Log ("playing");
 				int[] noteArray;
-				if (tempPlay.TryGetValue(p.Instrument, out noteArray)){
-					tempPlay [p.Instrument][p.Note]++;
+				if (nextPlay.TryGetValue(p.Instrument, out noteArray)){
+					nextPlay [p.Instrument][p.Note]++; // increment number of players already playing this note
 				} else {
-					int[] noteArr = new int[numberNotes];
+					int[] noteArr = new int[numberNotes]; // create new note array
 					noteArr[p.Note] = 1;
-					tempPlay [p.Instrument] = noteArr;
+					nextPlay [p.Instrument] = noteArr;
 				}
 			} else {
-				break;
+				break; // done with all currently playing players
 			}
 		}
-		playSounds (tempPlay, totalPlaying);
+		crossfadeSounds (nextPlay, totalPlaying); // crossfade from tempPlaying to nextPlay
 		stopwatch.Stop();
-		foreach (KeyValuePair<int, int[]> kvp in tempPlay)
-		{
-			Debug.Log( "instrument: "+kvp.Key+" notes: "+ kvp.Value[0]+ " , "+kvp.Value[1]+ " , "+kvp.Value[2] + " time: "+stopwatch.ElapsedMilliseconds);
-		}
+//		Debug.Log ("timer: " + stopwatch.ElapsedMilliseconds);
+
 	}
 
-	void playSounds(Dictionary<int, int[]> tempPlay, int total) {
-		foreach (KeyValuePair<int, int[]> instr in tempPlay) {
-			if(instr.Value.Length > 0) {
-				for (int i = 0; i < instr.Value.Length; i++) {
-					int volume = instr.Value [i];
-					if(volume > 0 && !soundCollection [instr.Key] [i].isPlaying) {
-						soundCollection [instr.Key] [i].Play ();
+	/// <summary>
+	/// Transition from the volume of the currently playing sounds to the volume of the sounds being played next.
+	/// </summary>
+	/// <param name="nextPlay">array with instruments and notes to be played next. With number of players playing one note.</param>
+	/// <param name="total">Total number of notes being played.</param>
+	void crossfadeSounds(Dictionary<int, int[]> nextPlay, int total) {
+//		Debug.Log ("nextplay");
+//		foreach (KeyValuePair<int, int[]> kvp in nextPlay)
+//		{
+//			Debug.Log( "instrument: "+kvp.Key+" notes: "+ kvp.Value[0]+ " , "+kvp.Value[1]+ " , "+kvp.Value[2]);
+//		}
+//		Debug.Log ("tempPlay");
+//		foreach (KeyValuePair<int, int[]> kvp in tempPlaying)
+//		{
+//			Debug.Log( "instrument: "+kvp.Key+" notes: "+ kvp.Value[0]+ " , "+kvp.Value[1]+ " , "+kvp.Value[2]);
+//		}
+		Dictionary<int, int[]> helpDict = new Dictionary<int, int[]>(nextPlay); // copy nextPlay for later
+		
+		foreach (KeyValuePair<int, int[]> kvp in tempPlaying) { // first go through tempPlaying
+			int tempInstrument = kvp.Key;
+			int[] tempNotes = kvp.Value;
+			int[] nextNotes;
+			if(nextPlay.TryGetValue(tempInstrument, out nextNotes)) { // check if a instrument gets played next
+				for (int i = 0; i < numberNotes; i++) { // if yes iterate trough all notes of this instrument
+					if(nextNotes[i] > 0) { // if one or more players play this note next
+						float volume =  (float)nextNotes[i]/total; //calculate the volume of this note 
+						AudioSource n = soundCollection [tempInstrument] [i]; // and set it to the soundCollection
+						n.volume = volume;
+					} else if(tempNotes[i] > 0) { // if note gets not played next, fade it out
+						AudioSource n = soundCollection [tempInstrument] [i];
+						StartCoroutine (FadeOut (n));
 					}
-					Debug.Log("note "+i);
+
+				}
+				nextPlay.Remove (tempInstrument); //remove instrument from nextPlay
+			} else { // if instrument gets not played next, fade all notes of it out
+				for (int i = 0; i < tempNotes.Length; i++) {
+					AudioSource n = soundCollection [tempInstrument] [i];
+					StartCoroutine (FadeOut (n));
 
 				}
 			}
 		}
+		if(nextPlay.Count > 0) { // if in nextPlay are some instruments left, iterate trough them and set the notes to their calculated valume
+			foreach (KeyValuePair<int, int[]> kvp in nextPlay) {
+				int[] nextNotes = kvp.Value;
+				for(int i = 0; i < numberNotes; i++) {
+					if(nextNotes[i] > 0) {
+						float volume =  (float)nextNotes[i]/total;
+						AudioSource n = soundCollection [kvp.Key] [i];
+						n.volume = volume;
+					}
+				}
+			}
+		}
+		tempPlaying = helpDict; //set tempPlaying to the copy of nextPlay
 	}
 
-	
+	/// <summary>
+	/// Since we change only the volume of the AudioSource, all sounds play from the Start with valume 0 in a loop
+	/// </summary>
+	void playOnStart() {
+		foreach(KeyValuePair<int, AudioSource[]> kvp in soundCollection) {
+			AudioSource[] notes = kvp.Value;
+			for(int i = 0; i < numberNotes; i++) {
+				AudioSource n = notes [i];
+				n.volume = 0;
+				n.loop = true;
+				n.Play ();
+			}
+		}
+	}
+
+	/// <summary>
+	/// Fades out an AudioSource
+	/// </summary>
+	/// <returns>null</returns>
+	/// <param name="audio">AudioSource</param>
+	private IEnumerator FadeOut(AudioSource audio) {
+		while( audio.volume > 0.5 )	{
+			audio.volume = Mathf.Lerp( audio.volume, 0f, fadeRate * Time.deltaTime );
+			yield return null;
+		}
+		// Close enough, turn it off!
+		audio.volume = 0f;
+	}
 
 }

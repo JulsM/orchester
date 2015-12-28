@@ -71,11 +71,12 @@ function getMousePos(evt) {
 function drawLines() {
     context.beginPath();
 	context.strokeStyle = "#fff";
-    var verticalSpace = Math.round(canvas.height / (config.numLines + 1));
+    var offset = Math.round(canvas.height / (config.numLines + 1));
+    var verticalSpace = offset;
     for (var i = 0; i < config.numLines; i++) {
         context.moveTo(0, verticalSpace);
         context.lineTo(canvas.width, verticalSpace);
-        verticalSpace += verticalSpace;
+        verticalSpace += offset;
     }
 	context.stroke();
 }
