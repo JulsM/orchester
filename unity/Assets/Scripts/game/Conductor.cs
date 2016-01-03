@@ -13,11 +13,12 @@ public class Conductor: MonoBehaviour {
 	private Dictionary<int, int[]> tempPlaying; //array of temporarily playing instruments, notes and how much of them
 
 	static Dictionary<string, string[]> soundNames = new Dictionary<string, string[]> {
-		{"instrument_a", new string[]{"syntklocka_stab_13","syntklocka_stab_12"
-				,"syntklocka_stab_11","syntklocka_stab_10","syntklocka_stab_9","syntklocka_stab_8","syntklocka_stab_7","syntklocka_stab_6"
-				,"syntklocka_stab_5","syntklocka_stab_4"}}
-//		{"instrument_b", new string[]{"t_high", "t","t_low" }},
-//		{"instrument_c", new string[]{"520", "480","440" }}
+		{"instrument_a", new string[]{"syntklocka_stab_13","syntklocka_stab_12","syntklocka_stab_11","syntklocka_stab_10","syntklocka_stab_9",
+				"syntklocka_stab_8","syntklocka_stab_7","syntklocka_stab_6","syntklocka_stab_5","syntklocka_stab_4"}},
+		{"instrument_b", new string[]{"drums_13","drums_12","drums_11","drums_10","drums_9",
+				"drums_8","drums_7","drums_6","drums_5","drums_4"}},
+		{"instrument_c", new string[]{"bassdist_13","bassdist_12","bassdist_11","bassdist_10","bassdist_9",
+				"bassdist_8","bassdist_7","bassdist_6","bassdist_5","bassdist_4"}}
 	};
 	static int numberNotes= 10;
 	static float fadeRate = 0.9999f;
