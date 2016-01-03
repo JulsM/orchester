@@ -4,13 +4,16 @@ using System.Collections.Generic;
 
 public class DrawOnScreen : MonoBehaviour {
 
-    private List<Player> playerList;
-   // private List<PlayerSprite> sprites;
+    private Dictionary<Player, PlayerSprite> playerToSprite;
+    private LinkedList<Player> playerList;
    
 
     void Start () {
-        // playerList = SocketBehaviour.getPlayers() ??
-
+        // playerList = SocketBehaviour.PlayerList;      SocketBehaviour muss statisch werden =/
+        foreach (Player p in playerList)
+        {
+            playerToSprite.Add(p, new PlayerSprite(p.Id, p.Y));
+        }
 
     }
 	
