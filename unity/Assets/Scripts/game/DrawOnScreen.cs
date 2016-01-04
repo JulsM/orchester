@@ -19,28 +19,33 @@ public class DrawOnScreen : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        drawPlayers();
+        movePlayers();
         playSound();
     }
 
-    public void drawPlayers()
+    public void movePlayers()
     {
         
     }
 
-    public void addPlayer(Player p)
+    public void addPlayerSprite(Player p)
     {
-        playerList.Add(p);
         playerToSprite.Add(p, new PlayerSprite(p.Id, p.Y));
     }
 
-    public void removePlayer(Player p)
+    public void removePlayerSprite(Player p)
     {
-        playerList.Remove(p);
         PlayerSprite s; 
         playerToSprite.TryGetValue(p, out s);
         s.deleteSphere();
         playerToSprite.Remove(p);
+    }
+
+    public void updatePlayerSprite(Player p, float y)
+    {
+        PlayerSprite s;
+        playerToSprite.TryGetValue(p, out s);
+        s.setY(y);
     }
 
     public void playSound()

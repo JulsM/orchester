@@ -78,7 +78,7 @@ public class SocketBehaviour : MonoBehaviour {
 		PlayerList.Add(new Player (playerId));
 		Debug.Log("[SocketIO] players length  "+PlayerList.Count);
         // DrawOnScreen method
-        dos.addPlayer(new Player(playerId));
+        dos.addPlayerSprite(new Player(playerId));
 
 	}
 
@@ -101,7 +101,7 @@ public class SocketBehaviour : MonoBehaviour {
 		Debug.Log("[SocketIO] players length  "+PlayerList.Count);
 
         // DrawOnScreen method
-        dos.removePlayer(p);
+        dos.removePlayerSprite(p);
     }
 
 	/// <summary>
@@ -120,6 +120,8 @@ public class SocketBehaviour : MonoBehaviour {
 				int instrument = Int32.Parse(player ["instrument"].ToString ());
 				int note = Int32.Parse(player ["note"].ToString ());
 				pList.updatePlayer (y, instrument, note);
+                // DrawOnScreen method
+                dos.updatePlayerSprite(pList,y);
 //				Debug.Log("[SocketIO] updated player position  "+pList.ToString());
 				break;
 			}
