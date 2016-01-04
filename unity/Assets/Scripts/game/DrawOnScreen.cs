@@ -5,46 +5,42 @@ using System.Collections.Generic;
 public class DrawOnScreen : MonoBehaviour {
 
     private Dictionary<Player, PlayerSprite> playerToSprite;
-    private LinkedList<Player> newPlayerList;
-    private LinkedList<Player> deletePlayerList;
+    private List<Player> playerList;
    
 
     void Start () {
-        // playerList = SocketBehaviour.PlayerList;      SocketBehaviour muss statisch werden =/
-        // SocketBehaviour.PlayerList = new List<Player>();
-        //foreach (Player p in newPlayerList)
-        //{
-        //    playerToSprite.Add(p, new PlayerSprite(p.Id, p.Y));
-        //}
+        List<Player> playerList = gameObject.GetComponent<SocketBehaviour>().PlayerList;
+        foreach (Player p in playerList)
+        {
+            playerToSprite.Add(p, new PlayerSprite(p.Id, p.Y));
+        }
 
     }
 	
 	// Update is called once per frame
 	void Update () {
-        //Modify SocketBehaviour accordingliy:
-        //SocketBehaviour has a list of new Players that is cleared after its been loaded into this playerToSprite Dictionary
-        //newPlayerList = SocketBehaviour.newPlayerList;
-        //SocketBehaviour.newPlayerList = new List<Player>();
-        //deletePlayerList = SocketBehaviour.deletePlayerList;
-        //SocketBehaviour.deletePlayerList = new List<Player>();
-        //foreach (Player p in newPlayerList)
-        //{
-        //    playerToSprite.Add(p, new PlayerSprite(p.Id, p.Y));
-        //}
-        //foreach (Player p in deletePlayerList)
-        //{
-        //    playerToSprite.Remove(p);
-        //}
-
-              
-        //drawPlayers();
-        //playSound();
-
+        drawPlayers();
+        playSound();
     }
 
     public void drawPlayers()
     {
         
+    }
+
+    public void addPlayer(Player p)
+    {
+        playerList.Add(p);
+        playerToSprite.Add(p, new PlayerSprite(p.Id, p.Y));
+    }
+
+    public void removePlayer(Player p)
+    {
+        playerList.Remove(p);
+        PlayerSprite s; 
+        playerToSprite.TryGetValue(p, out s);
+        s.deleteSphere();
+        playerToSprite.Remove(p);
     }
 
     public void playSound()

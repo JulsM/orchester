@@ -10,6 +10,8 @@ public class SocketBehaviour : MonoBehaviour {
 
 	private SocketIOComponent socket;
 	public List<Player> PlayerList { get; set;}
+    //DrawOnScreen Class to call it's methods
+    private DrawOnScreen dos;
 
 	// Use this for initialization
 	void Start () {
@@ -34,6 +36,10 @@ public class SocketBehaviour : MonoBehaviour {
 		socket.On("remove player", removePlayer);
 		socket.On("update player", updatePlayer);
 		socket.On("stop interaction", stopPlayerInteraction);
+
+        // Initialize DrawOnScreen Class
+        dos = new DrawOnScreen();
+
 
 	}
 
@@ -71,6 +77,9 @@ public class SocketBehaviour : MonoBehaviour {
 		Debug.Log("[SocketIO] add player  "+playerId);
 		PlayerList.Add(new Player (playerId));
 		Debug.Log("[SocketIO] players length  "+PlayerList.Count);
+        // DrawOnScreen method
+        dos.addPlayer(new Player(playerId));
+
 	}
 
 	/// <summary>
@@ -81,15 +90,19 @@ public class SocketBehaviour : MonoBehaviour {
 	{
 		string playerId = e.data ["player"].ToString ();
 		Debug.Log("[SocketIO] remove player  "+playerId);
+        Player p = new Player("");
 		for(int i = 0; i < PlayerList.Count; i++) {
-			Player p = PlayerList [i];
+			p = PlayerList [i];
 			if(p.Id.Equals(playerId)) {
 				PlayerList.RemoveAt (i);
 				break;
 			}
 		}
 		Debug.Log("[SocketIO] players length  "+PlayerList.Count);
-	}
+
+        // DrawOnScreen method
+        dos.removePlayer(p);
+    }
 
 	/// <summary>
 	/// Updates the a specified player object.
