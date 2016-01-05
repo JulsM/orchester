@@ -11,7 +11,7 @@ public class SocketBehaviour : MonoBehaviour {
 	private SocketIOComponent socket;
 	public List<Player> PlayerList { get; set;}
     //DrawOnScreen Class to call it's methods
-    private DrawOnScreen dos;
+    //private DrawOnScreen dos;
 
 	// Use this for initialization
 	void Start () {
@@ -38,7 +38,7 @@ public class SocketBehaviour : MonoBehaviour {
 		socket.On("stop interaction", stopPlayerInteraction);
 
         // Initialize DrawOnScreen Class
-        dos = new DrawOnScreen();
+        //dos = new DrawOnScreen();
 
 
 	}
@@ -79,7 +79,7 @@ public class SocketBehaviour : MonoBehaviour {
 		Debug.Log("[SocketIO] players length  "+PlayerList.Count);
         
         // DrawOnScreen method
-        dos.addPlayerSprite(new Player(playerId));
+        //dos.addPlayerSprite(new Player(playerId));
 
 	}
 
@@ -102,7 +102,7 @@ public class SocketBehaviour : MonoBehaviour {
 		Debug.Log("[SocketIO] players length  "+PlayerList.Count);
 
         // DrawOnScreen method
-        dos.removePlayerSprite(p);
+        //dos.removePlayerSprite(p);
     }
 
 	/// <summary>
@@ -123,7 +123,7 @@ public class SocketBehaviour : MonoBehaviour {
 				pList.updatePlayer (y, instrument, note);
                 
                 // DrawOnScreen method
-                dos.updatePlayerSprite(pList,y);
+                //dos.updatePlayerSprite(pList,y);
 
 //				Debug.Log("[SocketIO] updated player position  "+pList.ToString());
 				break;

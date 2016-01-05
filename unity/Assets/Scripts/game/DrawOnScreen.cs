@@ -4,24 +4,35 @@ using System.Collections.Generic;
 
 public class DrawOnScreen : MonoBehaviour {
 
-    private Dictionary<Player, PlayerSprite> playerToSprite;
+    private Dictionary<Player, PlayerSprite> playerToSprite = new Dictionary<Player, PlayerSprite>();
     private List<Player> playerList;
+    private bool start = true;
    
 
-    void Start () {
+    void StartAlternative () {
+     /*   Debug.Log("DrawOnScreen is initialized");
         List<Player> playerList = gameObject.GetComponent<SocketBehaviour>().PlayerList;
+        //List<Player> playerList = new List<Player>();
         playerList.Add(new Player("tim"));
         foreach (Player p in playerList)
         {
             playerToSprite.Add(p, new PlayerSprite(p.Id, p.Y));
         }
-
+        */
     }
+
 	
 	// Update is called once per frame
 	void Update () {
-         movePlayers();
+      /*  if (start)
+        {
+            StartAlternative();
+            start = false;
+        }
+        
+        movePlayers();
         playSound();
+        */
     }
 
     public void movePlayers()
