@@ -10,6 +10,7 @@ public class DrawOnScreen : MonoBehaviour {
 
     void Start () {
         List<Player> playerList = gameObject.GetComponent<SocketBehaviour>().PlayerList;
+        playerList.Add(new Player("tim"));
         foreach (Player p in playerList)
         {
             playerToSprite.Add(p, new PlayerSprite(p.Id, p.Y));
@@ -19,7 +20,7 @@ public class DrawOnScreen : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        movePlayers();
+         movePlayers();
         playSound();
     }
 

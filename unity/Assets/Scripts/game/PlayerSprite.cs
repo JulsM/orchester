@@ -14,7 +14,7 @@ public class PlayerSprite : MonoBehaviour {
         this.id = id;
         this.y = y;
         sphere.transform.position = new Vector3(0, 0, 0);
-        sphere.transform.localScale = new Vector3(1, 1, 1);
+        sphere.transform.localScale = new Vector3(10, 10, 10);
         myMaterial.color = Color.blue;
         sphere.GetComponent<MeshRenderer>().material = myMaterial;
         //TODO how to remove? maybe seperate 'delete' function to be called before deleting it in the DrawOnScreen - Scripts map

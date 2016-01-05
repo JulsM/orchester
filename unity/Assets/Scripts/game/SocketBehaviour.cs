@@ -77,6 +77,7 @@ public class SocketBehaviour : MonoBehaviour {
 		Debug.Log("[SocketIO] add player  "+playerId);
 		PlayerList.Add(new Player (playerId));
 		Debug.Log("[SocketIO] players length  "+PlayerList.Count);
+        
         // DrawOnScreen method
         dos.addPlayerSprite(new Player(playerId));
 
@@ -120,8 +121,10 @@ public class SocketBehaviour : MonoBehaviour {
 				int instrument = Int32.Parse(player ["instrument"].ToString ());
 				int note = Int32.Parse(player ["note"].ToString ());
 				pList.updatePlayer (y, instrument, note);
+                
                 // DrawOnScreen method
                 dos.updatePlayerSprite(pList,y);
+
 //				Debug.Log("[SocketIO] updated player position  "+pList.ToString());
 				break;
 			}
