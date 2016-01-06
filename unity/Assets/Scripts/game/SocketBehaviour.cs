@@ -9,16 +9,16 @@ public class SocketBehaviour : MonoBehaviour {
 
 
 	private SocketIOComponent socket;
-	public List<Player> PlayerList { get; set;}
-    //DrawOnScreen Class to call it's methods
-    //private DrawOnScreen dos;
+	private List<Player> playerList;
+	private DrawOnScreen draw;
 
 	// Use this for initialization
 	void Start () {
 		GameObject go = GameObject.Find("SocketIO");
 		socket = go.GetComponent<SocketIOComponent>();
 
-		PlayerList = new List<Player> ();
+		playerList = gameObject.GetComponent<Orchestra> ().PlayerList;
+		draw = gameObject.GetComponent<DrawOnScreen> ();
 
 		socket.On("open", (SocketIOEvent e) => {
 			Debug.Log("[SocketIO] Open received: " + socket.sid );
@@ -37,8 +37,6 @@ public class SocketBehaviour : MonoBehaviour {
 		socket.On("update player", updatePlayer);
 		socket.On("stop interaction", stopPlayerInteraction);
 
-        // Initialize DrawOnScreen Class
-        //dos = new DrawOnScreen();
 
 
 	}
@@ -55,10 +53,10 @@ public class SocketBehaviour : MonoBehaviour {
 		if (answer [0] ["connected"].ToString ().Equals ("true")) {
 			JSONObject players = answer [0] ["players"];
 			for(int i = 0; i < players.Count; i++) {
-				PlayerList.Add(new Player (players[i].ToString()));
+				playerList.Add(new Player (players[i].ToString()));
 				Debug.Log("[SocketIO] player: " + players[i].ToString());
 			}
-			Debug.Log("[SocketIO] unity connected: player list length " + PlayerList.Count);
+			Debug.Log("[SocketIO] unity connected: player list length " + playerList.Count);
 		} else {
 			Debug.Log ("error connecting");
 		}
@@ -75,11 +73,11 @@ public class SocketBehaviour : MonoBehaviour {
 	{
 		string playerId = e.data ["player"].ToString ();
 		Debug.Log("[SocketIO] add player  "+playerId);
-		PlayerList.Add(new Player (playerId));
-		Debug.Log("[SocketIO] players length  "+PlayerList.Count);
+		playerList.Add(new Player (playerId));
+		Debug.Log("[SocketIO] players length  "+playerList.Count);
         
         // DrawOnScreen method
-        //dos.addPlayerSprite(new Player(playerId));
+        draw.addPlayerSprite(new Player(playerId));
 
 	}
 
@@ -92,17 +90,17 @@ public class SocketBehaviour : MonoBehaviour {
 		string playerId = e.data ["player"].ToString ();
 		Debug.Log("[SocketIO] remove player  "+playerId);
         Player p = new Player("");
-		for(int i = 0; i < PlayerList.Count; i++) {
-			p = PlayerList [i];
+		for(int i = 0; i < playerList.Count; i++) {
+			p = playerList [i];
 			if(p.Id.Equals(playerId)) {
-				PlayerList.RemoveAt (i);
+				playerList.RemoveAt (i);
 				break;
 			}
 		}
-		Debug.Log("[SocketIO] players length  "+PlayerList.Count);
+		Debug.Log("[SocketIO] players length  "+playerList.Count);
 
         // DrawOnScreen method
-        //dos.removePlayerSprite(p);
+        draw.removePlayerSprite(p);
     }
 
 	/// <summary>
@@ -114,8 +112,8 @@ public class SocketBehaviour : MonoBehaviour {
 		
 
 		JSONObject player = e.data ["player"];
-		for(int i = 0; i < PlayerList.Count; i++) {
-			Player pList = PlayerList [i];
+		for(int i = 0; i < playerList.Count; i++) {
+			Player pList = playerList [i];
 			if(pList.Id.Equals(player["id"].ToString())) {
 				float y = float.Parse (player ["y"].ToString ());
 				int instrument = Int32.Parse(player ["instrument"].ToString ());
@@ -142,8 +140,8 @@ public class SocketBehaviour : MonoBehaviour {
 	{
 		string playerId = e.data ["player"].ToString ();
 
-		for(int i = 0; i < PlayerList.Count; i++) {
-			Player p = PlayerList [i];
+		for(int i = 0; i < playerList.Count; i++) {
+			Player p = playerList [i];
 			if(p.Id.Equals(playerId)) {
 				p.CurrentlyPlaying = false;
 				Debug.Log("[SocketIO] stop player  "+p.ToString());

@@ -48,40 +48,14 @@ public class Conductor: MonoBehaviour {
 		tempPlaying = new Dictionary<int, int[]> ();
 	}
 
-	void Update() {
-		System.Diagnostics.Stopwatch stopwatch = System.Diagnostics.Stopwatch.StartNew(); 
-		List<Player> playerList = gameObject.GetComponent<SocketBehaviour> ().PlayerList;
-		List <Player> sortedList = playerList.OrderByDescending (p => p.CurrentlyPlaying).ToList(); //sort playerlist that all currently playing players come first
 
-		Dictionary<int, int[]> nextPlay = new Dictionary<int, int[]>(); //array with instruments and notes which get played in the next frame
-		int totalPlaying = 0;
-		foreach (Player p in sortedList) {
-			if(p.CurrentlyPlaying) {
-				totalPlaying++;
-				int[] noteArray;
-				if (nextPlay.TryGetValue(p.Instrument, out noteArray)){
-					nextPlay [p.Instrument][p.Note]++; // increment number of players already playing this note
-				} else {
-					int[] noteArr = new int[numberNotes]; // create new note array
-					noteArr[p.Note] = 1;
-					nextPlay [p.Instrument] = noteArr;
-				}
-			} else {
-				break; // done with all currently playing players
-			}
-		}
-		crossfadeSounds (nextPlay, totalPlaying); // crossfade from tempPlaying to nextPlay
-		stopwatch.Stop();
-//		Debug.Log ("timer: " + stopwatch.ElapsedMilliseconds);
-
-	}
 
 	/// <summary>
 	/// Transition from the volume of the currently playing sounds to the volume of the sounds being played next.
 	/// </summary>
 	/// <param name="nextPlay">array with instruments and notes to be played next. With number of players playing one note.</param>
 	/// <param name="total">Total number of notes being played.</param>
-	void crossfadeSounds(Dictionary<int, int[]> nextPlay, int total) {
+	public void crossfadeSounds(Dictionary<int, int[]> nextPlay, int total) {
 //		Debug.Log ("nextplay");
 //		foreach (KeyValuePair<int, int[]> kvp in nextPlay)
 //		{
