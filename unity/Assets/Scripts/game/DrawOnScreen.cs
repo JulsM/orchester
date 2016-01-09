@@ -42,7 +42,7 @@ public class DrawOnScreen : MonoBehaviour {
 
     public void addPlayerSprite(Player p)
     {
-        playerToSprite.Add(p, new PlayerSprite(p.Id, p.Y));
+//        playerToSprite.Add(p, new PlayerSprite(p.Id, p.Y));
     }
 
     public void removePlayerSprite(Player p)

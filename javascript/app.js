@@ -37,9 +37,10 @@ io.sockets.on('connection', function (socket) {
     socket.on("unity connect", function(data, fn){
         if(room != null) {
             room.screenSocket = socket;
-            var json = {"connected": true, "players": []};
+            var json = {"connected": true, "players": [], "names": []};
             for (var i = 0; i < room.mobileSockets.length; i++) {
                 json.players.push(room.mobileSockets[i].player);
+                json.names.push(room.mobileSockets[i].name);
             }
             
         } else {
@@ -52,6 +53,7 @@ io.sockets.on('connection', function (socket) {
     socket.on("connect mobile", function(data, fn){
         if(room !== null){
             socket.player = data.player;
+            socket.name = data.name;
             room.mobileSockets.push(socket);
             console.log('mobileSockets length '+room.mobileSockets.length);
             fn({connected: true, player: data.player});

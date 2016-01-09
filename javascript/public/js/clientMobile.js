@@ -6,16 +6,7 @@ $(document).ready(function(){
     // fired upon successful connection
     socket.on('connect', function() {
         console.log('connection successful');
-        socket.emit('connect mobile', { "player": socket.id}, function(data){
-            if(data.connected){
-                console.log('player: '+data.player+' connected');
-                if(player != 'undefined') {
-                    player.id = socket.id;
-                }
-            }else{
-                console.log('player not connected. '+data.error);
-            }
-        });
+        socketConnect = true;
     });
 
     //Fired upon a connection error
@@ -39,14 +30,22 @@ $(document).ready(function(){
     
     
 });
-
+var socketConnect = false;
 function initMobile() {
     $('#playBtn').click(function() {
-        var fullscreenEnabled = document.fullscreenEnabled || document.mozFullScreenEnabled || document.webkitFullscreenEnabled;
-        if(fullscreenEnabled) {
-            // toggleFullscreen();
+        if($('#nameInput').val().length > 0) {
+            var fullscreenEnabled = document.fullscreenEnabled || document.mozFullScreenEnabled || document.webkitFullscreenEnabled;
+            if(fullscreenEnabled) {
+                // toggleFullscreen();
+            }
+            $('#mobileOverlay').hide();
+            connectMobile($('#nameInput').val());
         }
-        $('#mobileOverlay').hide();
+
+    });
+    $('#nameInput').focus( function() {
+        $(this).select();
+
     });
 
     // Events
@@ -108,6 +107,23 @@ function leaveFullscreen() {
     }
 }
 
+
+function connectMobile(name) {
+    if(socketConnect) {
+        socket.emit('connect mobile', { "player": socket.id, "name": name}, function(data){
+            if(data.connected){
+                console.log('player: '+data.player+' connected');
+                if(player != 'undefined') {
+                    player.id = socket.id;
+                }
+            }else{
+                console.log('player not connected. '+data.error);
+            }
+        });
+    } else {
+        setTimeout(connectMobile(name), 5000);
+    }
+}
 
 
 

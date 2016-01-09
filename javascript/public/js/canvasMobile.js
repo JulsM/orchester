@@ -24,7 +24,7 @@ function Player(){
     
 
 function initCanvas() {
-    $(window).resize(respondCanvas);
+    $(window).resize(function() {respondCanvas(); drawCircle();});
     respondCanvas();
     player = new Player();
     drawCircle();
@@ -45,8 +45,6 @@ function respondCanvas(){
     var container = $(canvas).parent();
     $(canvas).attr('width', $(container).width() ); //max width
     $(canvas).attr('height', $(container).height() ); //max height
-
-    redrawCanvas();
 }
 
 /*

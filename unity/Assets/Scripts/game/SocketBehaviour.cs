@@ -52,9 +52,10 @@ public class SocketBehaviour : MonoBehaviour {
 	{
 		if (answer [0] ["connected"].ToString ().Equals ("true")) {
 			JSONObject players = answer [0] ["players"];
+			JSONObject names = answer [0] ["names"];
 			for(int i = 0; i < players.Count; i++) {
-				playerList.Add(new Player (players[i].ToString()));
-				Debug.Log("[SocketIO] player: " + players[i].ToString());
+				playerList.Add(new Player (players[i].ToString(), names[i].ToString()));
+				Debug.Log("[SocketIO] player: " + players[i].ToString()+" name "+ names[i].ToString());
 			}
 			Debug.Log("[SocketIO] unity connected: player list length " + playerList.Count);
 		} else {
@@ -72,12 +73,13 @@ public class SocketBehaviour : MonoBehaviour {
 	public void addPlayer(SocketIOEvent e)
 	{
 		string playerId = e.data ["player"].ToString ();
+		string playerName = e.data ["name"].ToString ();
 		Debug.Log("[SocketIO] add player  "+playerId);
-		playerList.Add(new Player (playerId));
+		playerList.Add(new Player (playerId, name));
 		Debug.Log("[SocketIO] players length  "+playerList.Count);
         
         // DrawOnScreen method
-        draw.addPlayerSprite(new Player(playerId));
+        draw.addPlayerSprite(new Player(playerId, name));
 
 	}
 
@@ -89,7 +91,7 @@ public class SocketBehaviour : MonoBehaviour {
 	{
 		string playerId = e.data ["player"].ToString ();
 		Debug.Log("[SocketIO] remove player  "+playerId);
-        Player p = new Player("");
+        Player p = new Player("", "");
 		for(int i = 0; i < playerList.Count; i++) {
 			p = playerList [i];
 			if(p.Id.Equals(playerId)) {

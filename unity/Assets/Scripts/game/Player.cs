@@ -4,6 +4,7 @@ using System.Collections;
 public class Player{
 
 	public string Id { get; set; }
+	public string Name { get; set; }
 	private float y;
 	public int Instrument { get; set; }
 	public int Note { get; set; }
@@ -17,9 +18,10 @@ public class Player{
 		}
 	}
 
-	public Player(string id)
+	public Player(string id, string name)
 	{
-		Id = id;
+		this.Id = id;
+		this.Name = name;
 		this.y = 0;
 		this.Instrument = 1;
 		this.Note = 1;

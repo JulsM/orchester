@@ -11,11 +11,13 @@ public class Orchestra : MonoBehaviour {
 	private Conductor conductor;
 	private DrawOnScreen dos;
 
-
+	void Awake () {
+		PlayerList = new List<Player> ();
+	}
 
 	// Use this for initialization
 	void Start () {
-		PlayerList = new List<Player> ();
+		
 		conductor = gameObject.GetComponent<Conductor> ();
 		dos = gameObject.GetComponent<DrawOnScreen> ();
 	}
