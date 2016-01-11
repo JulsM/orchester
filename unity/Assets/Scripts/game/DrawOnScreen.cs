@@ -4,65 +4,28 @@ using System.Collections.Generic;
 
 public class DrawOnScreen : MonoBehaviour {
 
-    private Dictionary<Player, PlayerSprite> playerToSprite = new Dictionary<Player, PlayerSprite>();
-    private List<Player> playerList;
-    private bool start = true;
-   
+    //private float x;
+    //Vector3 startPosition = new Vector3 (-10,0,5);
+    //int maxSpeed;
 
-    void StartAlternative () {
-     /*   Debug.Log("DrawOnScreen is initialized");
-        List<Player> playerList = gameObject.GetComponent<SocketBehaviour>().PlayerList;
-        //List<Player> playerList = new List<Player>();
-        playerList.Add(new Player("tim"));
-        foreach (Player p in playerList)
-        {
-            playerToSprite.Add(p, new PlayerSprite(p.Id, p.Y));
-        }
-        */
+    void Start () {
+
     }
 
-	
-	// Update is called once per frame
-	void Update () {
-      /*  if (start)
-        {
-            StartAlternative();
-            start = false;
-        }
-        
-        movePlayers();
-        playSound();
-        */
-    }
-
-    public void movePlayers()
+    public void draw(Player p, PlayerSprite s)
     {
         
+        s.Y = p.Y/10;
+        s.getSphere().transform.position = new Vector3(0, 0, p.Y / 10);
+        //s.getSphere().transform.position = new Vector3(startPosition.x + Mathf.Sin(Time.time * maxSpeed), 0, p.Y/10);
+        //if (transform.position.x > 10f || transform.position.x < -10f)
+        //{
+        //    transform.position = new Vector3(transform.position.x, 0, p.Y/10);
+        //}
+        //Debug.Log("xPos: " + startPosition.x + Mathf.Sin(Time.time * maxSpeed));
+//        Debug.Log("s.Y: " + s.Y);
+//        Debug.Log("p.Y: " + p.Y);
     }
 
-    public void addPlayerSprite(Player p)
-    {
-//        playerToSprite.Add(p, new PlayerSprite(p.Id, p.Y));
-    }
-
-    public void removePlayerSprite(Player p)
-    {
-        PlayerSprite s; 
-        playerToSprite.TryGetValue(p, out s);
-        s.deleteSphere();
-        playerToSprite.Remove(p);
-    }
-
-    public void updatePlayerSprite(Player p, float y)
-    {
-        PlayerSprite s;
-        playerToSprite.TryGetValue(p, out s);
-        s.setY(y);
-    }
-
-    public void playSound()
-    {
-
-    }
 
 }

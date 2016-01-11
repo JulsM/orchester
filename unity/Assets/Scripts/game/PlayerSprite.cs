@@ -1,22 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerSprite : MonoBehaviour {
+public class PlayerSprite{
 
-    private string id;
-    private float y;
+    public string Id { get; set; }
+    public float Y { get; set; }
     private GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-    private Material myMaterial = new Material(Shader.Find("Particles/Alpha Blended"));
+    //private Material myMaterial = new Material(Shader.Find("Particles/AlphaBlended"));
 
 
     public PlayerSprite( string id, float y) // Color c)
     {
-        this.id = id;
-        this.y = y;
-        sphere.transform.position = new Vector3(0, 0, 0);
-        sphere.transform.localScale = new Vector3(10, 10, 10);
-        myMaterial.color = Color.blue;
-        sphere.GetComponent<MeshRenderer>().material = myMaterial;
+        this.Id = id;
+        this.Y = y;
+        this.sphere.transform.position = new Vector3(0, 0, 0);
+        /*
+        this.sphere.transform.localScale = new Vector3(5, 5, 5);
+        this.myMaterial.color = Color.blue;
+        this.sphere.GetComponent<MeshRenderer>().material = myMaterial;
+        */
         //TODO how to remove? maybe seperate 'delete' function to be called before deleting it in the DrawOnScreen - Scripts map
     }
 
@@ -27,27 +29,18 @@ public class PlayerSprite : MonoBehaviour {
 
     public void changeColor(Color c)
     {
-        myMaterial.color = c;
+        //myMaterial.color = c;
     }
 
     public void deleteSphere()
     {
+        //TODO destroy really!
         sphere.SetActive(false);
     }
 
-    public string getID()
+    public GameObject getSphere()
     {
-        return id;
-    }
-
-    public float getY()
-    {
-        return y;
-    }
-
-    public void setY(float y)
-    {
-        this.y = y;
+        return sphere; 
     }
 
 }

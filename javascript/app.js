@@ -92,7 +92,12 @@ io.sockets.on('connection', function (socket) {
     socket.on("update position", function(data){
         var player = data.player;
         // console.log(data);
-        var note = Math.floor(player.y * conf.notes / 100);
+        if(player.y > 0) {
+            var note = Math.floor(player.y * conf.notes / 100);
+        } else {
+            var note = 0;
+        }
+        
         // console.log(note);
         if(room.screenSocket != null) { 
             
