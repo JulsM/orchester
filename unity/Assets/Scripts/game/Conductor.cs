@@ -18,10 +18,12 @@ public class Conductor: MonoBehaviour {
 		{"instrument_b", new string[]{"drums_13","drums_12","drums_11","drums_10","drums_9",
 				"drums_8","drums_7","drums_6","drums_5","drums_4"}},
 		{"instrument_c", new string[]{"bassdist_13","bassdist_12","bassdist_11","bassdist_10","bassdist_9",
-				"bassdist_8","bassdist_7","bassdist_6","bassdist_5","bassdist_4"}}
+				"bassdist_8","bassdist_7","bassdist_6","bassdist_5","bassdist_4"}},
+		{"instrument_d", new string[]{"woody_13","woody_12","woody_11","woody_10","woody_9",
+				"woody_8","woody_7","woody_6","woody_5","woody_4"}}
 	};
 	static int numberNotes= 10;
-	static float fadeRate = 0.9999f;
+	static float fadeRate = 0.99999f;
 
 
 
@@ -129,7 +131,7 @@ public class Conductor: MonoBehaviour {
 	/// <returns>null</returns>
 	/// <param name="audio">AudioSource</param>
 	private IEnumerator FadeOut(AudioSource audio) {
-		while( audio.volume > 0.5 )	{
+		while( audio.volume > 0.6 )	{
 			audio.volume = Mathf.Lerp( audio.volume, 0f, fadeRate * Time.deltaTime );
 			yield return null;
 		}
