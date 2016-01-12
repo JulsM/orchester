@@ -39,7 +39,7 @@ public class Conductor: MonoBehaviour {
 			for(int j = 0; j < instrument.Value.Length; j++) {
 				string note = instrument.Value [j];
 				AudioSource s = gameObject.AddComponent<AudioSource>(); //add AudioSource to gameObject
-				s.clip = Resources.Load(instrument.Key + "\\"+note) as AudioClip; // load from Ressources folder
+				s.clip = Resources.Load(instrument.Key + "/"+note) as AudioClip; // load from Ressources folder
 				s.outputAudioMixerGroup = master.FindMatchingGroups (instrument.Key) [0]; // route to matching mixer
 				sources [j] = s;
 			}
