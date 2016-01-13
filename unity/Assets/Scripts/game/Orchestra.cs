@@ -6,11 +6,14 @@ using System.Linq;
 
 public class Orchestra : MonoBehaviour {
 
-	//public List<Player> PlayerList { get; set;}
 	static int numberNotes= 10;
 	private Conductor conductor;
 	private DrawOnScreen dos;
-    public Dictionary<Player, PlayerSprite> playerToSprite = new Dictionary<Player, PlayerSprite>();
+	public Dictionary<Player, PlayerSprite> PlayerDict { get; set;}
+
+	void Awake() {
+		PlayerDict = new Dictionary<Player, PlayerSprite>();
+	}
 
 
 
@@ -24,12 +27,12 @@ public class Orchestra : MonoBehaviour {
 	void Update () {
 		System.Diagnostics.Stopwatch stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
-        List<Player> sortedList = playerToSprite.Keys.ToList().OrderByDescending(p => p.CurrentlyPlaying).ToList(); //sort playerlist that all currently playing players come first;
+//        List<Player> sortedList = playerToSprite.Keys.ToList().OrderByDescending(p => p.CurrentlyPlaying).ToList(); //sort playerlist that all currently playing players come first;
 
         Dictionary<int, int[]> nextPlay = new Dictionary<int, int[]>(); //array with instruments and notes which get played in the next frame
 		int totalPlaying = 0;
 
-        foreach (KeyValuePair<Player, PlayerSprite> entry in playerToSprite)
+        foreach (KeyValuePair<Player, PlayerSprite> entry in PlayerDict)
         {
             Player p = entry.Key;
             if (p.CurrentlyPlaying)
@@ -47,17 +50,13 @@ public class Orchestra : MonoBehaviour {
                     nextPlay[p.Instrument] = noteArr;
                 }
             }
-            else
-            {
-                break; // done with all currently playing players
-            }
-
             dos.draw(entry.Key, entry.Value);
         }
 
 
 		conductor.crossfadeSounds (nextPlay, totalPlaying); // crossfade from tempPlaying to nextPlay
 		stopwatch.Stop();
-		//		Debug.Log ("timer: " + stopwatch.ElapsedMilliseconds);
+//		Debug.Log ("timer: " + stopwatch.ElapsedMilliseconds);
+//		Debug.Log ("fps: " + 1.0/Time.deltaTime);
 	}
 }

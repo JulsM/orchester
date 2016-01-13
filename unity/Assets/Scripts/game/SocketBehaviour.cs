@@ -17,7 +17,7 @@ public class SocketBehaviour : MonoBehaviour {
 		GameObject go = GameObject.Find("SocketIO");
 		socket = go.GetComponent<SocketIOComponent>();
 
-        playerDict = gameObject.GetComponent<Orchestra>().playerToSprite;
+		playerDict = gameObject.GetComponent<Orchestra> ().PlayerDict;
         dos = gameObject.GetComponent<DrawOnScreen> ();
 
 		socket.On("open", (SocketIOEvent e) => {

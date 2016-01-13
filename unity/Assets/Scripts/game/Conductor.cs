@@ -31,7 +31,7 @@ public class Conductor: MonoBehaviour {
 		master = Resources.Load("Master") as AudioMixer; // master mixer
 		soundCollection = new Dictionary<int, AudioSource[]>();
 		int i = 0;
-		//load AudioClips likes specified in the SoundNames array
+		//load AudioClips like specified in the SoundNames array
 		foreach(KeyValuePair<string, string[]> instrument in soundNames){
 			
 			AudioSource[] sources = new AudioSource[instrument.Value.Length];
