@@ -12,15 +12,12 @@ public class Conductor: MonoBehaviour {
 	private Dictionary<int, AudioSource[]> soundCollection; // all sounds as AudioSources
 	private Dictionary<int, int[]> tempPlaying; //array of temporarily playing instruments, notes and how much of them
 
-	static Dictionary<string, string[]> soundNames = new Dictionary<string, string[]> {
-		{"instrument_a", new string[]{"syntklocka_stab_13","syntklocka_stab_12","syntklocka_stab_11","syntklocka_stab_10","syntklocka_stab_9",
-				"syntklocka_stab_8","syntklocka_stab_7","syntklocka_stab_6","syntklocka_stab_5","syntklocka_stab_4"}},
-		{"instrument_b", new string[]{"drums_13","drums_12","drums_11","drums_10","drums_9",
-				"drums_8","drums_7","drums_6","drums_5","drums_4"}},
-		{"instrument_c", new string[]{"bassdist_13","bassdist_12","bassdist_11","bassdist_10","bassdist_9",
-				"bassdist_8","bassdist_7","bassdist_6","bassdist_5","bassdist_4"}},
-		{"instrument_d", new string[]{"woody_13","woody_12","woody_11","woody_10","woody_9",
-				"woody_8","woody_7","woody_6","woody_5","woody_4"}}
+	static Dictionary<string, string> soundNames = new Dictionary<string, string> {
+		{"instrument_a", "violin"},
+		{"instrument_b", "oboe"},
+		{"instrument_c", "waterpipe"},
+		{"instrument_d", "conga"},
+		{"instrument_e", "synth"}
 	};
 	static int numberNotes= 10;
 	static float fadeRate = 0.99999f;
@@ -32,16 +29,16 @@ public class Conductor: MonoBehaviour {
 		soundCollection = new Dictionary<int, AudioSource[]>();
 		int i = 0;
 		//load AudioClips like specified in the SoundNames array
-		foreach(KeyValuePair<string, string[]> instrument in soundNames){
+		foreach(KeyValuePair<string, string> instrument in soundNames){
 			
-			AudioSource[] sources = new AudioSource[instrument.Value.Length];
+			AudioSource[] sources = new AudioSource[numberNotes];
 
-			for(int j = 0; j < instrument.Value.Length; j++) {
-				string note = instrument.Value [j];
+			for(int j = 1; j <= numberNotes ; j++) {
+				string note = instrument.Value +"_"+ j;
 				AudioSource s = gameObject.AddComponent<AudioSource>(); //add AudioSource to gameObject
 				s.clip = Resources.Load(instrument.Key + "/"+note) as AudioClip; // load from Ressources folder
 				s.outputAudioMixerGroup = master.FindMatchingGroups (instrument.Key) [0]; // route to matching mixer
-				sources [j] = s;
+				sources [numberNotes - j] = s;
 			}
 			soundCollection.Add(i, sources);
 			i++;
@@ -114,6 +111,11 @@ public class Conductor: MonoBehaviour {
 	/// Since we change only the volume of the AudioSource, all sounds play from the Start with valume 0 in a loop
 	/// </summary>
 	void playOnStart() {
+		AudioSource beat = gameObject.AddComponent<AudioSource>();
+		beat.clip = Resources.Load("beat") as AudioClip; 
+		beat.loop = true;
+		beat.volume = 0.3f;
+		beat.Play ();
 		foreach(KeyValuePair<int, AudioSource[]> kvp in soundCollection) {
 			AudioSource[] notes = kvp.Value;
 			for(int i = 0; i < numberNotes; i++) {
