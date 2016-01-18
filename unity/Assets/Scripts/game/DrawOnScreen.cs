@@ -12,7 +12,8 @@ public class DrawOnScreen : MonoBehaviour {
     public void draw(Player p, PlayerSprite s)
     {
         s.Y = p.Y/10;
-        s.getSphere().transform.position = new Vector3(Mathf.PingPong(Time.time, 10)-5 , 0, p.Y / 10);
+        s.getSphere().transform.position = new Vector3(Mathf.PingPong(Time.time *5, 24)-12 , 0, p.Y / 10);
+        s.changeColor(p.Instrument);
     }
 
 

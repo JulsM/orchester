@@ -3,10 +3,11 @@ using System.Collections;
 
 public class PlayerSprite{
 
+    
     public string Id { get; set; }
     public float Y { get; set; }
     private GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-    //private Material myMaterial = new Material(Shader.Find("Particles/AlphaBlended"));
+    Material mat = Resources.Load("Materials/sphereMaterial", typeof(Material)) as Material;
 
 
     public PlayerSprite( string id, float y) // Color c)
@@ -14,12 +15,7 @@ public class PlayerSprite{
         this.Id = id;
         this.Y = y;
         this.sphere.transform.position = new Vector3(0, 0, 0);
-        /*
-        this.sphere.transform.localScale = new Vector3(5, 5, 5);
-        this.myMaterial.color = Color.blue;
-        this.sphere.GetComponent<MeshRenderer>().material = myMaterial;
-        */
-        //TODO how to remove? maybe seperate 'delete' function to be called before deleting it in the DrawOnScreen - Scripts map
+        this.sphere.GetComponent<MeshRenderer>().material = mat;
     }
 
 	// Update is called once per frame
@@ -27,14 +23,34 @@ public class PlayerSprite{
 	    //TODO this for animation?
 	}
 
-    public void changeColor(Color c)
+    public void changeColor(int instrument)
     {
-        //myMaterial.color = c;
+        switch (instrument)
+        {
+            case 0:
+                mat.color = Color.green;
+                break;
+            case 1:
+                mat.color = Color.blue;
+                break;
+            case 2:
+                mat.color = Color.yellow;
+                break;
+            case 3:
+                mat.color = Color.magenta;
+                break;
+            case 4:
+                mat.color = Color.red;
+                break;
+            default:
+                mat.color = Color.black;
+                break;
+        }
     }
 
     public void deleteSphere()
     {
-        //TODO destroy really!
+        //TODO better way to destory?
         sphere.SetActive(false);
     }
 
