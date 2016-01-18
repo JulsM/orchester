@@ -20,7 +20,7 @@ public class Conductor: MonoBehaviour {
 		{"instrument_e", "synth"}
 	};
 	static int numberNotes= 10;
-	static float fadeRate = 0.99999f;
+	static float fadeTime = 0.2f;
 
 
 
@@ -79,6 +79,7 @@ public class Conductor: MonoBehaviour {
 						n.volume = volume;
 					} else if(tempNotes[i] > 0) { // if note gets not played next, fade it out
 						AudioSource n = soundCollection [tempInstrument] [i];
+//						n.volume = 0;
 						StartCoroutine (FadeOut (n));
 					}
 
@@ -87,6 +88,7 @@ public class Conductor: MonoBehaviour {
 			} else { // if instrument gets not played next, fade all notes of it out
 				for (int i = 0; i < tempNotes.Length; i++) {
 					AudioSource n = soundCollection [tempInstrument] [i];
+//					n.volume = 0;
 					StartCoroutine (FadeOut (n));
 
 				}
@@ -133,12 +135,22 @@ public class Conductor: MonoBehaviour {
 	/// <returns>null</returns>
 	/// <param name="audio">AudioSource</param>
 	private IEnumerator FadeOut(AudioSource audio) {
-		while( audio.volume > 0.6 )	{
-			audio.volume = Mathf.Lerp( audio.volume, 0f, fadeRate * Time.deltaTime );
+//		while( audio.volume > 0.6 )	{
+//			audio.volume = Mathf.Lerp( audio.volume, 0f, fadeRate * Time.deltaTime );
+//			yield return null;
+//		}
+//		// Close enough, turn it off!
+//		audio.volume = 0f;
+		float start = 0.3f;
+		float end = 0.0f;
+		float i = 0.0f;
+		float step = 1 / fadeTime;
+		while (i <= 1.0)
+		{
+			i += step * Time.deltaTime;
+			audio.volume = Mathf.Lerp(start, end, i);
 			yield return null;
 		}
-		// Close enough, turn it off!
-		audio.volume = 0f;
 	}
 
 }
