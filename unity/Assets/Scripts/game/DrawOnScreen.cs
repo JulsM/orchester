@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class DrawOnScreen : MonoBehaviour {
 
-
     void Start () {
 
     }
