@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class DrawOnScreen : MonoBehaviour {
 
-
     void Start () {
 
     }
@@ -14,6 +13,14 @@ public class DrawOnScreen : MonoBehaviour {
         s.Y = p.Y/10;
         s.getSphere().transform.position = new Vector3(Mathf.PingPong(Time.time *5, 24)-12 , 0, p.Y / 10);
         s.changeColor(p.Instrument);
+        if(s.getSphere().transform.position.x > 0)
+        {
+            s.setParticleSystem(true);
+        }
+        else
+        {
+            s.setParticleSystem(false);
+        }
     }
 
 

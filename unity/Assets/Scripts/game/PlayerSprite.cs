@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class PlayerSprite{
 
     
@@ -8,7 +9,7 @@ public class PlayerSprite{
     public float Y { get; set; }
     private GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
     Material mat = Resources.Load("Materials/sphereMaterial", typeof(Material)) as Material;
-
+    GameObject particles = GameObject.FindGameObjectWithTag("ParticleSystem");
 
     public PlayerSprite( string id, float y) // Color c)
     {
@@ -16,12 +17,18 @@ public class PlayerSprite{
         this.Y = y;
         this.sphere.transform.position = new Vector3(0, 0, 0);
         this.sphere.GetComponent<MeshRenderer>().material = mat;
+        particles.transform.parent = sphere.transform;
     }
 
 	// Update is called once per frame
 	void Update () {
 	    //TODO this for animation?
 	}
+
+    public void setParticleSystem(bool b)
+    {
+        particles.GetComponent<ParticleSystem>().enableEmission = b;
+    }
 
     public void changeColor(int instrument)
     {
