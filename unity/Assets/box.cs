@@ -7,6 +7,7 @@ public class box : MonoBehaviour {
     {
         Debug.Log("collision triggered");
         //other.transform.parent.GetComponent<GameObject>().transform.parent.GetComponent<PlayerSprite>().setParticleSystem(true);
+		Debug.Log(other.ToString ());
         GameObject g = other.GetComponentInParent<GameObject>();
         PlayerSprite s = g.GetComponentInParent<PlayerSprite>();
         s.setParticleSystem(true);

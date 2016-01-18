@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public class PlayerSprite:MonoBehaviour{
+public class PlayerSprite {
 
     
     public string Id { get; set; }
@@ -18,7 +18,7 @@ public class PlayerSprite:MonoBehaviour{
         this.sphere.transform.position = new Vector3(0, 0, 0);
         this.sphere.GetComponent<MeshRenderer>().material = mat;
         particles.transform.parent = sphere.transform;
-        this.sphere.AddComponent<SphereCollider>();
+//        this.sphere.AddComponent<SphereCollider>();
         particles.GetComponent<ParticleSystem>().enableEmission = false;
     }
 
