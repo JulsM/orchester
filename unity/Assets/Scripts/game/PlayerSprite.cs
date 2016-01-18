@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public class PlayerSprite{
+public class PlayerSprite:MonoBehaviour{
 
     
     public string Id { get; set; }
@@ -18,12 +18,9 @@ public class PlayerSprite{
         this.sphere.transform.position = new Vector3(0, 0, 0);
         this.sphere.GetComponent<MeshRenderer>().material = mat;
         particles.transform.parent = sphere.transform;
+        this.sphere.AddComponent<SphereCollider>();
+        particles.GetComponent<ParticleSystem>().enableEmission = false;
     }
-
-	// Update is called once per frame
-	void Update () {
-	    //TODO this for animation?
-	}
 
     public void setParticleSystem(bool b)
     {
@@ -65,5 +62,4 @@ public class PlayerSprite{
     {
         return sphere; 
     }
-
 }
