@@ -7,28 +7,30 @@ public class PlayerSprite {
     
     public string Id { get; set; }
     public float Y { get; set; }
-    private GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-    Material mat = Resources.Load("Materials/sphereMaterial", typeof(Material)) as Material;
-    GameObject particles = GameObject.FindGameObjectWithTag("ParticleSystem");
+    private GameObject sphere;
+//    Material mat = Resources.Load("Materials/sphereMaterial", typeof(Material)) as Material;
+//    GameObject particles = GameObject.FindGameObjectWithTag("ParticleSystem");
 
     public PlayerSprite( string id, float y) // Color c)
     {
         this.Id = id;
         this.Y = y;
-        this.sphere.transform.position = new Vector3(0, 0, 0);
-        this.sphere.GetComponent<MeshRenderer>().material = mat;
-        particles.transform.parent = sphere.transform;
+		sphere = GameObject.Instantiate(Resources.Load("Sphere")) as GameObject;
+//        this.sphere.transform.position = new Vector3(0, 0, 0);
+//        this.sphere.GetComponent<MeshRenderer>().material = mat;
+//        particles.transform.parent = sphere.transform;
 //        this.sphere.AddComponent<SphereCollider>();
-        particles.GetComponent<ParticleSystem>().enableEmission = false;
+//        particles.GetComponent<ParticleSystem>().enableEmission = false;
     }
-
-    public void setParticleSystem(bool b)
-    {
-        particles.GetComponent<ParticleSystem>().enableEmission = b;
-    }
+//
+//    public void setParticleSystem(bool b)
+//    {
+//        particles.GetComponent<ParticleSystem>().enableEmission = b;
+//    }
 
     public void changeColor(int instrument)
     {
+		Material mat = this.sphere.GetComponent<Renderer> ().material;
         switch (instrument)
         {
             case 0:
@@ -55,7 +57,8 @@ public class PlayerSprite {
     public void deleteSphere()
     {
         //TODO better way to destory?
-        sphere.SetActive(false);
+//        sphere.SetActive(false);
+		GameObject.Destroy (this.sphere);
     }
 
     public GameObject getSphere()

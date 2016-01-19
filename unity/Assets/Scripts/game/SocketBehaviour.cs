@@ -54,7 +54,7 @@ public class SocketBehaviour : MonoBehaviour {
 			JSONObject players = answer [0] ["players"];
 			JSONObject names = answer [0] ["names"];
 			for(int i = 0; i < players.Count; i++) {
-				playerDict.Add(new Player(players[i].ToString(), names[i].ToString()), new PlayerSprite(players[i].ToString(), 0F));
+				playerDict.Add(new Player(players[i].ToString(), names[i].ToString()), new PlayerSprite(players[i].ToString(), 50F));
 				Debug.Log("[SocketIO] player: " + players[i].ToString()+" name "+ names[i].ToString());
 			}
 			Debug.Log("[SocketIO] unity connected: player list length " + playerDict.Count);
@@ -75,7 +75,7 @@ public class SocketBehaviour : MonoBehaviour {
 		string playerId = e.data ["player"].ToString ();
 		string playerName = e.data ["name"].ToString ();
 		Debug.Log("[SocketIO] add player  "+playerId+" name "+name);
-		playerDict.Add(new Player(playerId, playerName), new PlayerSprite(playerId, 0F));
+		playerDict.Add(new Player(playerId, playerName), new PlayerSprite(playerId, 50f));
 		Debug.Log("[SocketIO] players length  "+playerDict.Count);
         
 
