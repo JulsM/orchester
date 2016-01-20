@@ -10,7 +10,6 @@ public class SocketBehaviour : MonoBehaviour {
 
 	private SocketIOComponent socket;
     private Dictionary<Player, PlayerSprite> playerDict;
-	private DrawOnScreen dos;
 
 	// Use this for initialization
 	void Start () {
@@ -18,7 +17,6 @@ public class SocketBehaviour : MonoBehaviour {
 		socket = go.GetComponent<SocketIOComponent>();
 
 		playerDict = gameObject.GetComponent<Orchestra> ().PlayerDict;
-        dos = gameObject.GetComponent<DrawOnScreen> ();
 
 		socket.On("open", (SocketIOEvent e) => {
 			Debug.Log("[SocketIO] Open received: " + socket.sid );
@@ -54,7 +52,8 @@ public class SocketBehaviour : MonoBehaviour {
 			JSONObject players = answer [0] ["players"];
 			JSONObject names = answer [0] ["names"];
 			for(int i = 0; i < players.Count; i++) {
-				playerDict.Add(new Player(players[i].ToString(), names[i].ToString()), new PlayerSprite(players[i].ToString(), 50F));
+				Player p = new Player (players [i].ToString (), names [i].ToString ());
+				playerDict.Add(p, new PlayerSprite(p));
 				Debug.Log("[SocketIO] player: " + players[i].ToString()+" name "+ names[i].ToString());
 			}
 			Debug.Log("[SocketIO] unity connected: player list length " + playerDict.Count);
@@ -75,7 +74,8 @@ public class SocketBehaviour : MonoBehaviour {
 		string playerId = e.data ["player"].ToString ();
 		string playerName = e.data ["name"].ToString ();
 		Debug.Log("[SocketIO] add player  "+playerId+" name "+name);
-		playerDict.Add(new Player(playerId, playerName), new PlayerSprite(playerId, 50f));
+		Player p = new Player (playerId, playerName);
+		playerDict.Add(p, new PlayerSprite(p));
 		Debug.Log("[SocketIO] players length  "+playerDict.Count);
         
 
