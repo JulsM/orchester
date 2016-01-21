@@ -144,6 +144,7 @@ public class SocketBehaviour : MonoBehaviour {
             if (p.Id.Equals(playerId))
             {
                 p.CurrentlyPlaying = false;
+				entry.Value.stopParticle ();
                 Debug.Log("[SocketIO] stop player  " + p.ToString());
                 break;
             }

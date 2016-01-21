@@ -13,13 +13,11 @@ public class Conductor: MonoBehaviour {
 	private Dictionary<int, int[]> tempPlaying; //array of temporarily playing instruments, notes and how much of them
 
 	static Dictionary<string, string> soundNames = new Dictionary<string, string> {
-		{"instrument_a", "violin"},
+		{"instrument_a", "synthPatt"},
 		{"instrument_b", "oboe"},
 		{"instrument_c", "waterpipe"},
 		{"instrument_d", "conga"},
-		{"instrument_e", "synth"},
-		{"instrument_f", "synthPatt"},
-		{"instrument_g", "piano"}
+		{"instrument_e", "piano"}
 	};
 	static int numberNotes= 10;
 	static float fadeTime = 0.2f;
@@ -118,7 +116,7 @@ public class Conductor: MonoBehaviour {
 		AudioSource beat = gameObject.AddComponent<AudioSource>();
 		beat.clip = Resources.Load("beat") as AudioClip; 
 		beat.loop = true;
-		beat.volume = 0.3f;
+		beat.volume = 0.4f;
 		beat.Play ();
 		foreach(KeyValuePair<int, AudioSource[]> kvp in soundCollection) {
 			AudioSource[] notes = kvp.Value;
@@ -126,6 +124,7 @@ public class Conductor: MonoBehaviour {
 				AudioSource n = notes [i];
 				n.volume = 0;
 				n.loop = true;
+				n.timeSamples = beat.timeSamples;
 				n.Play ();
 			}
 		}

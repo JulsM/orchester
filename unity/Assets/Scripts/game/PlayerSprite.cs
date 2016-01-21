@@ -72,4 +72,8 @@ public class PlayerSprite {
     {
         return sphere; 
     }
+
+	public void stopParticle() {
+		this.sphere.transform.GetChild (0).gameObject.GetComponent<ParticleSystem> ().Stop ();
+	}
 }
