@@ -12,6 +12,8 @@ public class DrawOnScreen : MonoBehaviour {
         s.Y = p.Y/10;
         s.getSphere().transform.position = new Vector3(Mathf.PingPong(Time.time *3, 24)-12 , 0, p.Y / 10);
         s.changeColor(p.Instrument);
+        //GameObject ai = s.addAfterImage();
+        //ai.transform.position = s.getSphere().transform.position;
         //s.OnCollisionEnter();
         /*
         if(s.getSphere().transform.position.x > 0)

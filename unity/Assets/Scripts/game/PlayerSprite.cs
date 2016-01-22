@@ -76,4 +76,10 @@ public class PlayerSprite {
 	public void stopParticle() {
 		this.sphere.transform.GetChild (0).gameObject.GetComponent<ParticleSystem> ().Stop ();
 	}
+
+    public GameObject addAfterImage()
+    {
+        GameObject ai = GameObject.Instantiate(Resources.Load("Blop")) as GameObject;
+        return ai;
+    }
 }
