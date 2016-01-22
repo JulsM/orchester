@@ -6,7 +6,7 @@ using System.Linq;
 
 public class Orchestra : MonoBehaviour {
 
-	static int numberNotes= 10;
+	static int numberNotes= 8;
 	private Conductor conductor;
 	private DrawOnScreen dos;
 	public Dictionary<Player, PlayerSprite> PlayerDict { get; set;}

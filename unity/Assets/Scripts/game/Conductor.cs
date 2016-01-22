@@ -19,7 +19,7 @@ public class Conductor: MonoBehaviour {
 		{"instrument_d", "conga"},
 		{"instrument_e", "piano"}
 	};
-	static int numberNotes= 10;
+	static int numberNotes= 8;
 	static float fadeTime = 0.2f;
 
 
