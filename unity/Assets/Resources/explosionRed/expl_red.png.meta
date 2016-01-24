@@ -1,0 +1,298 @@
+fileFormatVersion: 2
+guid: 53d0313cd6eef7a40937947e1d9c1d85
+timeCreated: 1453656198
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: expl_red_0
+    21300002: expl_red_1
+    21300004: expl_red_2
+    21300006: expl_red_3
+    21300008: expl_red_4
+    21300010: expl_red_5
+    21300012: expl_red_6
+    21300014: expl_red_7
+    21300016: expl_red_8
+    21300018: expl_red_9
+    21300020: expl_red_10
+    21300022: expl_red_11
+    21300024: expl_red_12
+    21300026: expl_red_13
+    21300028: expl_red_14
+    21300030: expl_red_15
+    21300032: expl_red_16
+    21300034: expl_red_17
+    21300036: expl_red_18
+    21300038: expl_red_19
+    21300040: expl_red_20
+    21300042: expl_red_21
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: expl_red_0
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 1787
+        width: 219
+        height: 187
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_1
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 1796
+        width: 206
+        height: 178
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_2
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 1784
+        width: 229
+        height: 187
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_3
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 1777
+        width: 223
+        height: 204
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_4
+      rect:
+        serializedVersion: 2
+        x: 1177
+        y: 1777
+        width: 206
+        height: 197
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_5
+      rect:
+        serializedVersion: 2
+        x: 1453
+        y: 1777
+        width: 219
+        height: 194
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_6
+      rect:
+        serializedVersion: 2
+        x: 1717
+        y: 1774
+        width: 225
+        height: 191
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_7
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 1520
+        width: 244
+        height: 216
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_8
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 1526
+        width: 229
+        height: 207
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_9
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 1520
+        width: 232
+        height: 216
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_10
+      rect:
+        serializedVersion: 2
+        x: 871
+        y: 1517
+        width: 239
+        height: 216
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_11
+      rect:
+        serializedVersion: 2
+        x: 1142
+        y: 1513
+        width: 247
+        height: 217
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_12
+      rect:
+        serializedVersion: 2
+        x: 1431
+        y: 1501
+        width: 248
+        height: 222
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_13
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 1173
+        width: 264
+        height: 274
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_14
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 1183
+        width: 273
+        height: 261
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_15
+      rect:
+        serializedVersion: 2
+        x: 662
+        y: 1173
+        width: 346
+        height: 258
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_16
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 1161
+        width: 333
+        height: 263
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_17
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 1145
+        width: 315
+        height: 260
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_18
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 843
+        width: 238
+        height: 245
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_19
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 862
+        width: 216
+        height: 200
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_20
+      rect:
+        serializedVersion: 2
+        x: 668
+        y: 859
+        width: 200
+        height: 162
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: expl_red_21
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 830
+        width: 270
+        height: 184
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

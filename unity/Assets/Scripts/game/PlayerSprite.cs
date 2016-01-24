@@ -8,6 +8,7 @@ public class PlayerSprite {
     public string Id { get; set; }
     public float Y { get; set; }
     private GameObject sphere;
+    private GameObject explosionSprite;
 
 	public PlayerSprite(Player p) // Color c)
     {
@@ -69,9 +70,31 @@ public class PlayerSprite {
 		this.sphere.transform.GetChild (0).gameObject.GetComponent<ParticleSystem> ().Stop ();
 	}
 
-    public GameObject addAfterImage()
+    public GameObject addAfterImage(int insturment)
     {
-        GameObject ai = GameObject.Instantiate(Resources.Load("explosion")) as GameObject;
-        return ai;
+        
+        switch (insturment)
+        {
+            case 0:
+                explosionSprite = GameObject.Instantiate(Resources.Load("explosion_green")) as GameObject;
+                break;
+            case 1:
+                explosionSprite = GameObject.Instantiate(Resources.Load("explosion_blue")) as GameObject;
+                break;
+            case 2:
+                explosionSprite = GameObject.Instantiate(Resources.Load("explosion_yellow")) as GameObject;
+                break;
+            case 3:
+                explosionSprite = GameObject.Instantiate(Resources.Load("explosion_purple")) as GameObject;
+                break;
+            case 4:
+                explosionSprite = GameObject.Instantiate(Resources.Load("explosion_red")) as GameObject;
+                break;
+            default:
+                explosionSprite = GameObject.Instantiate(Resources.Load("explosion_green")) as GameObject;
+                break;
+        }
+        
+        return explosionSprite;
     }
 }
