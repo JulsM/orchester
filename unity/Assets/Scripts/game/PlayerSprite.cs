@@ -8,8 +8,6 @@ public class PlayerSprite {
     public string Id { get; set; }
     public float Y { get; set; }
     private GameObject sphere;
-//    Material mat = Resources.Load("Materials/sphereMaterial", typeof(Material)) as Material;
-//    GameObject particles = GameObject.FindGameObjectWithTag("ParticleSystem");
 
 	public PlayerSprite(Player p) // Color c)
     {
@@ -17,18 +15,7 @@ public class PlayerSprite {
 		this.Y = p.Y;
 		sphere = GameObject.Instantiate(Resources.Load("Sphere")) as GameObject;
 		sphere.transform.GetChild (1).gameObject.GetComponent<TextMesh>().text = p.Name.Replace("\"", "");
-		Debug.Log (p.Name);
-//        this.sphere.transform.position = new Vector3(0, 0, 0);
-//        this.sphere.GetComponent<MeshRenderer>().material = mat;
-//        particles.transform.parent = sphere.transform;
-//        this.sphere.AddComponent<SphereCollider>();
-//        particles.GetComponent<ParticleSystem>().enableEmission = false;
     }
-//
-//    public void setParticleSystem(bool b)
-//    {
-//        particles.GetComponent<ParticleSystem>().enableEmission = b;
-//    }
 
     public void changeColor(int instrument)
     {
@@ -36,25 +23,30 @@ public class PlayerSprite {
 		ParticleSystem particle = this.sphere.transform.GetChild (0).gameObject.GetComponent<ParticleSystem> ();
         switch (instrument)
         {
-			case 0:
-				mat.color = Color.green;
-				particle.startColor = Color.green;
+		case 0:
+				Color g = new Color (0f, 255f, 0f);
+				mat.color = g;
+				particle.startColor = g;
                 break;
             case 1:
-                mat.color = Color.blue;
-				particle.startColor = Color.blue;
+				Color b = new Color (0f, 255f, 255f);
+                mat.color = b;
+				particle.startColor = b;
                 break;
             case 2:
-                mat.color = Color.yellow;
-				particle.startColor = Color.yellow;
+				Color y = new Color (255f, 255f, 0f);
+                mat.color = y;
+				particle.startColor = y;
                 break;
             case 3:
-                mat.color = Color.magenta;
-				particle.startColor = Color.magenta;
+				Color m = new Color (204f, 0f, 153f);
+                mat.color = m;
+				particle.startColor = m;
                 break;
             case 4:
-                mat.color = Color.red;
-				particle.startColor = Color.red;
+				Color r = new Color (255f, 51f, 0f);
+                mat.color = r;
+				particle.startColor = r;
                 break;
             default:
                 mat.color = Color.black;
