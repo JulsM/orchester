@@ -71,7 +71,7 @@ public class PlayerSprite {
 
     public GameObject addAfterImage()
     {
-        GameObject ai = GameObject.Instantiate(Resources.Load("Blop")) as GameObject;
+        GameObject ai = GameObject.Instantiate(Resources.Load("explosion")) as GameObject;
         return ai;
     }
 }
