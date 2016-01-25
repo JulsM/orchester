@@ -9,8 +9,8 @@ public class PlayerSprite {
     public float Y { get; set; }
     private GameObject sphere;
     private GameObject explosionSprite;
-    GameObject[] explosions;
-    int curentExplosionPointer;
+    //GameObject[] explosions;
+    //int curentExplosionPointer;
     private ParticleSystem particle;
 
     public PlayerSprite(Player p) // Color c)
@@ -19,8 +19,8 @@ public class PlayerSprite {
 		this.Y = p.Y;
 		sphere = GameObject.Instantiate(Resources.Load("Sphere")) as GameObject;
 		sphere.transform.GetChild (1).gameObject.GetComponent<TextMesh>().text = p.Name.Replace("\"", "");
-        explosions = new GameObject[5];
-        curentExplosionPointer = 0;
+        //explosions = new GameObject[5];
+       // curentExplosionPointer = 0;
         particle = (ParticleSystem)sphere.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>();
     }
 
@@ -65,11 +65,13 @@ public class PlayerSprite {
     public void deleteSphere()
     {
 		GameObject.Destroy (this.sphere);
+        /*
         GameObject.Destroy(explosions[0]);
         GameObject.Destroy(explosions[1]);
         GameObject.Destroy(explosions[2]);
         GameObject.Destroy(explosions[3]);
         GameObject.Destroy(explosions[4]);
+        */
     }
 
     public GameObject getSphere()
@@ -81,7 +83,7 @@ public class PlayerSprite {
 		this.sphere.transform.GetChild (0).gameObject.GetComponent<ParticleSystem> ().Stop ();
 	}
 
-    public void addAfterImage(int insturment)
+    public GameObject addAfterImage(int insturment)
     {
         switch (insturment)
         {
@@ -104,12 +106,15 @@ public class PlayerSprite {
                 explosionSprite = GameObject.Instantiate(Resources.Load("explosion_green")) as GameObject;
                 break;
         }
-
+        return explosionSprite;
+        //GameObject.Destroy(explosionSprite, 3F);
+        /*
         if (curentExplosionPointer >= 5) curentExplosionPointer = 0;
         GameObject.Destroy(explosions[curentExplosionPointer]);
         explosions[curentExplosionPointer] = explosionSprite;
         explosions[curentExplosionPointer].transform.position = getSphere().transform.position;
         curentExplosionPointer++;
+        */
     }
 
     public void effectOn()

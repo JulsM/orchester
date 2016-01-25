@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class planeMovement : MonoBehaviour {
+public class middlePlaneMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
 	
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    void Update()
+    {
         //transform.position = new Vector3(transform.position.x, Mathf.PingPong(Time.time, 2) -3, Mathf.PingPong(Time.time/3, 2) - 1);
-        transform.position = new Vector3(transform.position.x, Mathf.PingPong(Time.time, 2) - 5,Mathf.Sin(Time.time/3)-1);
+        transform.position = new Vector3(Mathf.PingPong(Time.time*3, 20) -5,transform.position.y, transform.position.z);
     }
 }
