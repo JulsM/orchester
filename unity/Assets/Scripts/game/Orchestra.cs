@@ -38,6 +38,7 @@ public class Orchestra : MonoBehaviour {
             Player p = entry.Key;
             if (p.CurrentlyPlaying)
             {
+                entry.Value.effectOn();
                 totalPlaying++;
                 int[] noteArray;
                 if (nextPlay.TryGetValue(p.Instrument, out noteArray))
@@ -50,6 +51,10 @@ public class Orchestra : MonoBehaviour {
                     noteArr[p.Note] = 1;
                     nextPlay[p.Instrument] = noteArr;
                 }
+            }
+            else
+            {
+                entry.Value.effectOff();
             }
             dos.draw(entry.Key, entry.Value);
         }
