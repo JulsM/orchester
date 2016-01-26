@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine.Audio;
-using System.Linq;
 
 public class Conductor: MonoBehaviour {
 
@@ -21,6 +20,7 @@ public class Conductor: MonoBehaviour {
 	};
 	static int numberNotes= 8;
 	static float fadeTime = 0.2f;
+	static float volMin = 0.6f;
 
 
 
@@ -55,16 +55,7 @@ public class Conductor: MonoBehaviour {
 	/// <param name="nextPlay">array with instruments and notes to be played next. With number of players playing one note.</param>
 	/// <param name="total">Total number of notes being played.</param>
 	public void crossfadeSounds(Dictionary<int, int[]> nextPlay, int total) {
-//		Debug.Log ("nextplay");
-//		foreach (KeyValuePair<int, int[]> kvp in nextPlay)
-//		{
-//			Debug.Log( "instrument: "+kvp.Key+" notes: "+ kvp.Value[0]+ " , "+kvp.Value[1]+ " , "+kvp.Value[2]);
-//		}
-//		Debug.Log ("tempPlay");
-//		foreach (KeyValuePair<int, int[]> kvp in tempPlaying)
-//		{
-//			Debug.Log( "instrument: "+kvp.Key+" notes: "+ kvp.Value[0]+ " , "+kvp.Value[1]+ " , "+kvp.Value[2]);
-//		}
+		
 		Dictionary<int, int[]> helpDict = new Dictionary<int, int[]>(nextPlay); // copy nextPlay for later
 		
 		foreach (KeyValuePair<int, int[]> kvp in tempPlaying) { // first go through tempPlaying
@@ -76,7 +67,7 @@ public class Conductor: MonoBehaviour {
 					if(nextNotes[i] > 0) { // if one or more players play this note next
 						float volume =  (float)nextNotes[i]/total; //calculate the volume of this note 
 						AudioSource n = soundCollection [tempInstrument] [i]; // and set it to the soundCollection
-						n.volume = volume;
+						n.volume = Mathf.Max(volume, volMin);
 					} else if(tempNotes[i] > 0) { // if note gets not played next, fade it out
 						AudioSource n = soundCollection [tempInstrument] [i];
 //						n.volume = 0;
@@ -101,7 +92,7 @@ public class Conductor: MonoBehaviour {
 					if(nextNotes[i] > 0) {
 						float volume =  (float)nextNotes[i]/total;
 						AudioSource n = soundCollection [kvp.Key] [i];
-						n.volume = volume;
+						n.volume = Mathf.Max(volume, volMin);
 					}
 				}
 			}

@@ -36,7 +36,7 @@ function initMobile() {
         if($('#nameInput').val().length > 0) {
             var fullscreenEnabled = document.fullscreenEnabled || document.mozFullScreenEnabled || document.webkitFullscreenEnabled;
             if(fullscreenEnabled) {
-                // toggleFullscreen();
+                toggleFullscreen();
             }
             $('#mobileOverlay').hide();
             connectMobile($('#nameInput').val());
@@ -104,6 +104,7 @@ function leaveFullscreen() {
     
     if (fullscreen === undefined) {
         $('#mobileOverlay').show();
+        socket.emit('remove player', { "player": socket.id});
     }
 }
 

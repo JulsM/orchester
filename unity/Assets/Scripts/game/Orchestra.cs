@@ -13,7 +13,7 @@ public class Orchestra : MonoBehaviour {
 
 	void Awake() {
 		PlayerDict = new Dictionary<Player, PlayerSprite>();
-        PlayerDict.Add(new Player("tim", "timy"), new PlayerSprite(new Player("tim", "timy")));
+//        PlayerDict.Add(new Player("tim", "timy"), new PlayerSprite(new Player("tim", "timy")));
 	}
 
 

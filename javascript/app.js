@@ -112,6 +112,19 @@ io.sockets.on('connection', function (socket) {
         
     });
 
+    socket.on("remove player", function(data){
+        for(i = 0; i < room.mobileSockets.length; i++) {
+                if(room.mobileSockets[i].id == socket.id) {
+                    console.log('remove player');
+                    room.mobileSockets.splice(i, 1);
+                    if(room.screenSocket != null) {
+                        room.screenSocket.emit('remove player', {"player": socket.player});
+                    }
+                    break;
+                }
+            }
+    });
+
 });
 
 

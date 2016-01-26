@@ -23,7 +23,7 @@ public class Player{
 		this.Id = id;
 		this.Name = name;
 		this.y = 50;
-		this.Instrument = 1;
+		this.Instrument = 0;
 		this.Note = 1;
 		this.CurrentlyPlaying = false;
 	}

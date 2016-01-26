@@ -32,10 +32,7 @@ function initCanvas() {
     canvas.addEventListener('touchmove', updatePosition);
     canvas.addEventListener('touchend', interactionEnd);
     canvas.addEventListener('touchstart', updatePosition);
-//    setInterval(function() {
-//      var percentY = 100 * (player.y) / canvas.height;
-//     socket.emit('update position', { "player": {"id": socket.id, "y": percentY, "instrument": player.instrument }});
-// }, 1000);
+
 }
 
 /*
