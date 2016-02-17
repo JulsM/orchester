@@ -6,30 +6,25 @@ using System.Linq;
 
 public class Orchestra : MonoBehaviour {
 
-	static int numberNotes= 8;
-	private Conductor conductor;
-	private DrawOnScreen dos;
-	public Dictionary<Player, PlayerSprite> PlayerDict { get; set;}
+	static int numberNotes= 8; // change here if you add or delete the number of notes, needed for the size of your note array
+	private Conductor conductor; // reference to conductor class
+	private DrawOnScreen dos; // reference to DrawOnScreen class
+	public Dictionary<Player, PlayerSprite> PlayerDict { get; set;} // the main list of all current players, with their PlayerSprite object
+
 
 	void Awake() {
 		PlayerDict = new Dictionary<Player, PlayerSprite>();
-//        PlayerDict.Add(new Player("tim", "timy"), new PlayerSprite(new Player("tim", "timy")));
 	}
 
 
-
-    // Use this for initialization
     void Start () {
 		conductor = gameObject.GetComponent<Conductor> ();
 		dos = gameObject.GetComponent<DrawOnScreen> ();
     }
 	
-	// Update is called once per frame
+	// Main Update method that handels the visuals and sounds frame by frame
 	void Update () {
-		System.Diagnostics.Stopwatch stopwatch = System.Diagnostics.Stopwatch.StartNew();
-
-//        List<Player> sortedList = playerToSprite.Keys.ToList().OrderByDescending(p => p.CurrentlyPlaying).ToList(); //sort playerlist that all currently playing players come first;
-
+		
         Dictionary<int, int[]> nextPlay = new Dictionary<int, int[]>(); //array with instruments and notes which get played in the next frame
 		int totalPlaying = 0;
 
@@ -38,7 +33,7 @@ public class Orchestra : MonoBehaviour {
             Player p = entry.Key;
             if (p.CurrentlyPlaying)
             {
-                entry.Value.effectOn();
+                entry.Value.effectOn(); // turn particle on
                 totalPlaying++;
                 int[] noteArray;
                 if (nextPlay.TryGetValue(p.Instrument, out noteArray))
@@ -54,15 +49,12 @@ public class Orchestra : MonoBehaviour {
             }
             else
             {
-                entry.Value.effectOff();
+                entry.Value.effectOff(); // turn particle off
             }
-            dos.draw(entry.Key, entry.Value);
+            dos.draw(entry.Key, entry.Value); // update visual position of each player
         }
 
 
-		conductor.crossfadeSounds (nextPlay, totalPlaying); // crossfade from tempPlaying to nextPlay
-		stopwatch.Stop();
-//		Debug.Log ("timer: " + stopwatch.ElapsedMilliseconds);
-//		Debug.Log ("fps: " + 1.0/Time.deltaTime);
+		conductor.crossfadeSounds (nextPlay, totalPlaying); // crossfade from last played sounds to the sounds to be played next
 	}
 }

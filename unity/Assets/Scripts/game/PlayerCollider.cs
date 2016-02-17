@@ -11,11 +11,9 @@ public class PlayerCollider : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-//		Debug.Log("enter");
 		particle.Play();
 	}
 	void OnTriggerExit(Collider other) {
-//		Debug.Log("exit");
 		particle.Stop();
 	}
 }

@@ -8,15 +8,15 @@ using System;
 public class SocketBehaviour : MonoBehaviour {
 
 
-	private SocketIOComponent socket;
-    private Dictionary<Player, PlayerSprite> playerDict;
+	private SocketIOComponent socket; // ocket gameobject that receives the events
+    private Dictionary<Player, PlayerSprite> playerDict; 
 
 	// Use this for initialization
 	void Start () {
 		GameObject go = GameObject.Find("SocketIO");
 		socket = go.GetComponent<SocketIOComponent>();
 
-		playerDict = gameObject.GetComponent<Orchestra> ().PlayerDict;
+		playerDict = gameObject.GetComponent<Orchestra> ().PlayerDict; // reference to the player list
 
 		socket.On("open", (SocketIOEvent e) => {
 			Debug.Log("[SocketIO] Open received: " + socket.sid );
@@ -107,7 +107,7 @@ public class SocketBehaviour : MonoBehaviour {
 	/// <summary>
 	/// Updates the a specified player object.
 	/// </summary>
-	/// <param name="e">player: id, x position % (float), y position % (float)</param>
+	/// <param name="e">player: id, y position in % (float), instrument (int), note (int)</param>
 	private void updatePlayer(SocketIOEvent e)
 	{
 		
