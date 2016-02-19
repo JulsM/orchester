@@ -4,18 +4,20 @@ var express = require('express')
 ,   io = require('socket.io').listen(server)
 ,   conf = require('./config.json');
 
-server.listen(conf.port);
+server.listen(conf.port); // listen to port
 
 // statische Dateien ausliefern
 app.use(express.static(__dirname + '/public'));
 
 // wenn der Pfad / aufgerufen wird
 app.get('/', function (req, res) {
-    // so wird die Datei index.html ausgegeben
+    // so wird die Datei mobile.html ausgegeben
     res.sendFile(__dirname + '/public/mobile.html');
 });
 
 var room = new Room();
+
+// the room is a singleton and connects alls client websockets to the unity websocket
 function Room(){
     // do we have an existing instance?
     if (typeof Room.instance === 'object') {
@@ -23,7 +25,7 @@ function Room(){
         var r = Room.instance;
         return r;
     }
-    this.screenSocket = null;  //Stores the socket for the desktop connection
+    this.screenSocket = null;  //Stores the socket for the unity connection
     this.mobileSockets = [];       //A list of all the mobile connections
 
     // cache
@@ -38,7 +40,7 @@ io.sockets.on('connection', function (socket) {
         if(room != null) {
             room.screenSocket = socket;
             var json = {"connected": true, "players": [], "names": []};
-            for (var i = 0; i < room.mobileSockets.length; i++) {
+            for (var i = 0; i < room.mobileSockets.length; i++) { // sync all players that are already in the list on the server
                 json.players.push(room.mobileSockets[i].player);
                 json.names.push(room.mobileSockets[i].name);
             }
@@ -47,16 +49,16 @@ io.sockets.on('connection', function (socket) {
             var json = {"connected": false};
         }
         console.log(json);
-        fn(json);
+        fn(json); // callback
     });
 
     socket.on("connect mobile", function(data, fn){
         if(room !== null){
-            socket.player = data.player;
+            socket.player = data.player; // save player and name in socket
             socket.name = data.name;
             room.mobileSockets.push(socket);
             console.log('mobileSockets length '+room.mobileSockets.length);
-            fn({connected: true, player: data.player});
+            fn({connected: true, player: data.player}); // callback
             if(room.screenSocket != null) {
                 room.screenSocket.emit('add player', data);
             }
@@ -67,14 +69,14 @@ io.sockets.on('connection', function (socket) {
 
   
     socket.on('disconnect', function () {
-        if(typeof socket.player == 'undefined') {
+        if(typeof socket.player == 'undefined') { // socket is unity connection
             console.log('screen connection lost');
             if(room !== null) {
                 for(i = 0; i < room.mobileSockets.length; i++) {
                     room.mobileSockets[i].emit('screen disconnect');
                 }
             }
-        } else {
+        } else { // socket is mobile connection
             console.log('mobile connection lost');
             for(i = 0; i < room.mobileSockets.length; i++) {
                 if(room.mobileSockets[i].id == socket.id) {
@@ -91,14 +93,12 @@ io.sockets.on('connection', function (socket) {
 
     socket.on("update position", function(data){
         var player = data.player;
-        // console.log(data);
         if(player.y > 0) {
-            var note = Math.floor(player.y * conf.notes / 100);
+            var note = Math.floor(player.y * conf.notes / 100); // compute the note depending on y position
         } else {
             var note = 0;
         }
         
-        // console.log(note);
         if(room.screenSocket != null) { 
             
             room.screenSocket.emit('update player', { "player": {"id": player.id, "y": player.y, "instrument": player.instrument, "note":  note}});

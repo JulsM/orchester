@@ -33,7 +33,7 @@ $(document).ready(function(){
 var socketConnect = false;
 function initMobile() {
     $('#playBtn').click(function() {
-        if($('#nameInput').val().length > 0) {
+        if($('#nameInput').val().length > 0) { // check name input
             var fullscreenEnabled = document.fullscreenEnabled || document.mozFullScreenEnabled || document.webkitFullscreenEnabled;
             if(fullscreenEnabled) {
                 toggleFullscreen();
@@ -62,6 +62,7 @@ function initMobile() {
         leaveFullscreen();
     });
 
+    //change instrument color and save data
     $('#btnWrapper').children().click(function() {
         $('#btnWrapper').children().css('border', '1px solid #333');
         $(this).css('border', '2px solid #fff');
@@ -71,7 +72,7 @@ function initMobile() {
     })
 }
 
-
+// switch to fullscreen or back
 function toggleFullscreen() {
     var element = document.documentElement;
     var fullscreen = document.fullscreenElement ||document.webkitFullscreenElement ||document.mozFullScreenElement ||document.msFullscreenElement;
@@ -108,7 +109,8 @@ function leaveFullscreen() {
     }
 }
 
-
+// transmit the player data to the server and get ready to play.
+// this works only if the socket is already connected
 function connectMobile(name) {
     if(socketConnect) {
         socket.emit('connect mobile', { "player": socket.id, "name": name}, function(data){
@@ -122,7 +124,7 @@ function connectMobile(name) {
             }
         });
     } else {
-        setTimeout(connectMobile(name), 5000);
+        setTimeout(connectMobile(name), 5000); // try again
     }
 }
 

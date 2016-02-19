@@ -1,3 +1,4 @@
+/* config file for server */
 {
 	"port": 3000,
 	"notes": 8

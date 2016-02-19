@@ -7,6 +7,9 @@ $(document).ready(function(){
 
 });
 
+/*
+* Player object is singleton, has all relevant data stored
+*/
 function Player(){
     // do we have an existing instance?
     if (typeof Player.instance === 'object') {
@@ -22,7 +25,9 @@ function Player(){
     return this;
 }
     
-
+/*
+* Init the canvas, add event listeners 
+*/
 function initCanvas() {
     $(window).resize(function() {respondCanvas(); drawCircle();});
     respondCanvas();
@@ -53,7 +58,7 @@ function redrawCanvas() {
 }
 
 /*
-* Clear canvas and redraw lines 
+* get the position of the mouse inside the canvas
 */
 function getMousePos(evt) {
     var rect = canvas.getBoundingClientRect();
@@ -63,6 +68,9 @@ function getMousePos(evt) {
     };
 }
 
+/*
+* Draw the lines depending on number of lines specified in config.
+*/
 function drawLines() {
     context.beginPath();
 	context.strokeStyle = "#fff";
@@ -76,6 +84,9 @@ function drawLines() {
 	context.stroke();
 }
 
+/*
+* Updates the position of the player object on touchmove and calls the emit method
+*/
 function updatePosition(e) {
     e.preventDefault();
     var touch = e.targetTouches[0];
@@ -85,6 +96,9 @@ function updatePosition(e) {
     emitPlayerUpdate();
 }
 
+/*
+* Draws the circle on the current player position 
+*/
 function drawCircle() {
     
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -95,13 +109,19 @@ function drawCircle() {
     context.fill();
 }
 
+/*
+* Emits on touch end the event
+*/
 function interactionEnd(e) {
     e.preventDefault();
     socket.emit('stop interaction', {"player": socket.id});
 }
 
 
+/*
+* Emits the updated player
+*/
 function emitPlayerUpdate() {
-    var percentY = Math.round(10000 * (player.y) / canvas.height) / 100;
+    var percentY = Math.round(10000 * (player.y) / canvas.height) / 100; // px position to percent
     socket.emit('update position', { "player": {"id": socket.id, "y": percentY, "instrument": player.instrument }});
 }
