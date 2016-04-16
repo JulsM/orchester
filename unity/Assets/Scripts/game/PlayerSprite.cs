@@ -12,6 +12,7 @@ public class PlayerSprite {
     private ParticleSystem particle;
     private Player p;
     private int wait=0;
+    private bool moved=false;
 
     public PlayerSprite(Player p)
     {
@@ -21,6 +22,17 @@ public class PlayerSprite {
 		sphere = GameObject.Instantiate(Resources.Load("Sphere")) as GameObject;
 		sphere.transform.GetChild (1).gameObject.GetComponent<TextMesh>().text = p.Name.Replace("\"", "");
         particle = (ParticleSystem)sphere.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>();
+    }
+
+    public void moveLabel()
+    {
+        TextMesh label = sphere.transform.GetChild(1).gameObject.GetComponent<TextMesh>();
+        label.transform.position = sphere.transform.position + new Vector3(1, 0, 0.3f);
+    }
+    public void unmoveLabel()
+    {
+        TextMesh label = sphere.transform.GetChild(1).gameObject.GetComponent<TextMesh>();
+        label.transform.position = sphere.transform.position + new Vector3(1,0,0);
     }
 
     public void explosion()
