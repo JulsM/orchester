@@ -13,7 +13,7 @@ public class Orchestra : MonoBehaviour {
 
 	void Awake() {
 		PlayerDict = new Dictionary<Player, PlayerSprite>();
-        //PlayerDict.Add(new Player("tim", "timy"), new PlayerSprite(new Player("tim", "timy")));
+        PlayerDict.Add(new Player("tim", "timy"), new PlayerSprite(new Player("tim", "timy")));
 	}
 
 
@@ -38,7 +38,7 @@ public class Orchestra : MonoBehaviour {
             Player p = entry.Key;
             if (p.CurrentlyPlaying)
             {
-                entry.Value.effectOn();
+                //entry.Value.effectOn();
                 totalPlaying++;
                 int[] noteArray;
                 if (nextPlay.TryGetValue(p.Instrument, out noteArray))
@@ -54,7 +54,7 @@ public class Orchestra : MonoBehaviour {
             }
             else
             {
-                entry.Value.effectOff();
+                //entry.Value.effectOff();
             }
             dos.draw(entry.Key, entry.Value);
             foreach(KeyValuePair<Player, PlayerSprite> otherPlayer in PlayerDict)
